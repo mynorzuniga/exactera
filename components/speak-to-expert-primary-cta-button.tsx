@@ -5,11 +5,12 @@ import { useState } from "react";
 
 import {
   DS_CTA_HOVER_TRANSITION_CLASS,
+  DS_PRIMARY_CTA_TRAILING_ICON_WRAP_CLASS,
   primaryCtaSurfaceStyle,
 } from "@/lib/ds-cta-interaction";
 
 const BASE_CLASS =
-  "inline-flex h-[3.25rem] shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] border-0 px-6 text-[1.125rem] leading-[1.6] font-bold text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900";
+  `group inline-flex h-[3.25rem] shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[0.5rem] border-0 px-6 text-[1.125rem] leading-[1.6] font-bold text-white focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 ${DS_CTA_HOVER_TRANSITION_CLASS}`.trim();
 
 /** Primary “Speak to an Expert” CTA — matches `design-system-cta-buttons` primary + hover. */
 export function SpeakToExpertPrimaryCtaButton({ className = "" }: { className?: string }) {
@@ -18,13 +19,17 @@ export function SpeakToExpertPrimaryCtaButton({ className = "" }: { className?: 
   return (
     <button
       type="button"
-      className={`${BASE_CLASS} ${DS_CTA_HOVER_TRANSITION_CLASS} ${className}`.trim()}
+      className={`${BASE_CLASS} ${className}`.trim()}
       style={primaryCtaSurfaceStyle(hover)}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => {
+        setHover(true);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+      }}
     >
       Speak to an Expert
-      <span className="inline-flex shrink-0 text-current [&_svg]:h-[1.125em] [&_svg]:w-[1.125em]">
+      <span className={DS_PRIMARY_CTA_TRAILING_ICON_WRAP_CLASS}>
         <ArrowRightIcon aria-hidden />
       </span>
     </button>

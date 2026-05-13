@@ -6,6 +6,7 @@ import { useId, useState } from "react";
 
 import {
   DS_CTA_HOVER_TRANSITION_CLASS,
+  DS_PRIMARY_CTA_TRAILING_ICON_WRAP_CLASS,
   primaryCtaSurfaceStyle,
   secondaryCtaSurfaceStyle,
 } from "@/lib/ds-cta-interaction";
@@ -31,7 +32,7 @@ import {
  *
  * | Variant   | Background           | Border                           | Text           | Other |
  * |-----------|----------------------|----------------------------------|----------------|-------|
- * | Primary   | Brand mint **600** idle; **700** + stronger glow (**mint 400**) on **hover** | None | White `#fff` | Idle glow `0 4px 28px` **mint 300** |
+ * | Primary   | **mint 600** + tight **mint 300** glow (idle and hover); **hover** adds gradient top **mint 500** → bottom **mint 600** | None | White `#fff` | Trailing arrow **slides right**; **stroke** 1.5 → 2.5 on hover/focus (`[&_svg]` + `group`) |
  * | Secondary | Brand navy **50** idle; **100** on **hover** | **900** idle; **800** hover | Brand navy 900 | **Hover** via `lib/ds-cta-interaction.ts` |
  * | Tertiary  | White `#fff` **10%** opacity | 1px solid black 70% opacity | Same as border | Black = base `#000000`; use on mid–light backgrounds |
  *
@@ -95,7 +96,13 @@ function CtaSpecimenButton({
     trailingIcon != null ? (
       <span className="inline-flex items-center justify-center gap-2">
         {LABEL}
-        <span className="inline-flex shrink-0 text-current [&_svg]:h-[1.125em] [&_svg]:w-[1.125em]">
+        <span
+          className={
+            variant === "primary"
+              ? DS_PRIMARY_CTA_TRAILING_ICON_WRAP_CLASS
+              : "inline-flex shrink-0 text-current [&_svg]:h-[1.125em] [&_svg]:w-[1.125em]"
+          }
+        >
           {trailingIcon}
         </span>
       </span>
@@ -104,14 +111,14 @@ function CtaSpecimenButton({
     );
 
   const transitionClass =
-    variant === "primary" || variant === "secondary"
-      ? DS_CTA_HOVER_TRANSITION_CLASS
-      : "";
+    variant === "primary" || variant === "secondary" ? DS_CTA_HOVER_TRANSITION_CLASS : "";
+
+  const groupClass = variant === "primary" ? "group" : "";
 
   return (
     <button
       type="button"
-      className={`inline-flex shrink-0 cursor-pointer items-center justify-center rounded-[0.5rem] leading-[1.6] font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 ${borderClass} ${sizeClasses} ${textClass} ${transitionClass}`.trim()}
+      className={`inline-flex shrink-0 cursor-pointer items-center justify-center rounded-[0.5rem] leading-[1.6] font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 ${borderClass} ${sizeClasses} ${textClass} ${transitionClass} ${groupClass}`.trim()}
       style={style}
       onMouseEnter={() => {
         if (variant === "primary" || variant === "secondary") {

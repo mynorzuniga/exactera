@@ -62,14 +62,14 @@ export default function Prototype1Page() {
 
               <PrototypeHeroCtaCluster />
             </div>
-            <div className="relative mx-auto flex w-full min-w-0 flex-col items-center overflow-visible">
+            <div className="relative mx-auto hidden w-full min-w-0 flex-col items-center overflow-visible lg:flex">
               {/* Main card centered; z-20 by default so it sits above side cards; hover/focus raises to z-40 */}
-              <div className="relative z-20 flex w-full justify-center hover:z-40 focus-within:z-40">
+              <div className="relative z-20 flex w-full justify-center opacity-70 transition-opacity duration-200 ease-out hover:z-40 hover:opacity-100 focus-within:z-40 focus-within:opacity-100">
                 <PrototypeHeroSeeHowCard />
               </div>
               <div className="relative mt-8 flex w-full min-w-0 justify-center overflow-visible sm:mt-10">
                 <div className="flex w-[min(21rem,calc(100%+1rem))] max-w-[calc(100vw-2.5rem)] justify-between gap-0 sm:w-[30rem]">
-                  <div className="relative z-10 shrink-0 translate-y-4 hover:z-40 focus-within:z-40 sm:translate-y-6">
+                  <div className="relative z-10 shrink-0 translate-y-4 opacity-70 transition-opacity duration-200 ease-out hover:z-40 hover:opacity-100 focus-within:z-40 focus-within:opacity-100 sm:translate-y-6">
                     <PrototypeHeroYoutubePreviewCard
                       previewSrc="/preview1.png"
                       label="Exactmatch is Here"
@@ -77,7 +77,7 @@ export default function Prototype1Page() {
                       youtubeEmbedBaseUrl="https://www.youtube.com/embed/VRMaHcj7CL8"
                     />
                   </div>
-                  <div className="relative z-10 shrink-0 -mt-[50px] translate-x-[calc(3rem-20px)] self-start hover:z-40 focus-within:z-40 sm:-mt-[66px] sm:translate-x-[calc(7rem-20px)]">
+                  <div className="relative z-10 shrink-0 -mt-[50px] translate-x-[calc(3rem-20px)] self-start opacity-70 transition-opacity duration-200 ease-out hover:z-40 hover:opacity-100 focus-within:z-40 focus-within:opacity-100 sm:-mt-[66px] sm:translate-x-[calc(7rem-20px)]">
                     <PrototypeHeroYoutubePreviewCard
                       previewSrc="/preview2.png"
                       label="Transfer Pricing"
