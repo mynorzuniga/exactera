@@ -1,0 +1,68 @@
+import type { Metadata } from "next";
+
+import { BRAND_NAVY, NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
+import { HeaderV1, PromotionBarV2 } from "@/components/design-system-header-footer";
+import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-strip";
+import { PrototypeHeroCtaCluster } from "@/components/prototype-hero-cta-cluster";
+import { PrototypeHeroGrowthBackdrop } from "@/components/prototype-hero-growth-backdrop";
+
+/**
+ * White hero; light grey dots (`NEUTRAL_GREY`). Step **50** on `#fff` is effectively
+ * invisible; **200** is the lightest ramp step that still reads as a stipple.
+ */
+const prototypeHeroStippleStyle = {
+  backgroundColor: "#ffffff",
+  backgroundImage: `radial-gradient(circle at center, ${NEUTRAL_GREY[200]} 0.55px, transparent 0.6px)`,
+  backgroundSize: "12px 12px",
+} as const;
+
+export const metadata: Metadata = {
+  title: "Exactera · Prototype 1",
+  description: "Interactive prototype 1 for Exactera.",
+};
+
+export default function Prototype1Page() {
+  return (
+    <div className="flex min-h-full flex-1 flex-col bg-zinc-50 [font-family:var(--font-plus-jakarta),system-ui,sans-serif]">
+      <div className="flex flex-col">
+        <PromotionBarV2 />
+        <HeaderV1 />
+      </div>
+
+      <section
+        className="relative min-h-[32rem] overflow-hidden sm:min-h-[38rem] lg:min-h-[min(70vh,44rem)]"
+        aria-labelledby="prototype-1-hero-heading"
+        style={{
+          ...prototypeHeroStippleStyle,
+          borderBottom: `1px solid ${NEUTRAL_GREY[200]}`,
+        }}
+      >
+        <PrototypeHeroGrowthBackdrop />
+        <div className="relative z-10 mx-auto max-w-[1320px] px-6 py-12 sm:py-16 lg:py-20">
+          <div className="w-full min-w-0 max-w-full lg:max-w-[50%]">
+            <h1
+              id="prototype-1-hero-heading"
+              className="text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em]"
+              style={{ color: BRAND_NAVY[900] }}
+            >
+              Transform Your Tax Strategy.
+              Inform Growth.
+            </h1>
+            <p
+              className="mt-6 text-[1rem] leading-[1.6] font-normal"
+              style={{ color: NEUTRAL_GREY[700] }}
+            >
+              Combine AI-powered tax services with expert guidance to manage risk, unlock
+              incentives, and turn tax into a strategic asset across your corporate tax
+              lifecycle.
+            </p>
+
+            <PrototypeHeroCtaCluster />
+          </div>
+        </div>
+      </section>
+
+      <PrototypeClientLogosStrip />
+    </div>
+  );
+}

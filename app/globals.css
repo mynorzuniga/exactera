@@ -12,15 +12,85 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Prototype 1 — client logos marquee (`components/prototype-client-logos-strip.tsx`) */
+@keyframes prototype-client-logos-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.prototype-client-logos-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
+}
+
+.prototype-client-logos-track {
+  display: flex;
+  width: max-content;
+  animation: prototype-client-logos-marquee 70s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prototype-client-logos-track {
+    animation: none;
+    justify-content: center;
+    margin-inline: auto;
+    width: auto;
+  }
+
+  .prototype-client-logos-track > ul:nth-child(2) {
+    display: none;
+  }
+}
+
+/* Promotion bar — mobile message ticker (`PromotionBarDismissible` in `design-system-header-footer.tsx`) */
+@keyframes promotion-bar-message-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.promotion-bar-message-track {
+  display: flex;
+  width: max-content;
+  animation: promotion-bar-message-marquee 24s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promotion-bar-message-track {
+    animation: none;
+  }
+}
+
+.promotion-bar-message-scroll {
+  -webkit-overflow-scrolling: touch;
 }

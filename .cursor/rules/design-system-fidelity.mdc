@@ -1,0 +1,13 @@
+---
+description: Enforces design-system fidelity — read system.md, no invented tokens or guesses.
+alwaysApply: true
+---
+
+# Design system fidelity (Exactera)
+
+- **Always read `system.md` at repo root** before building or changing UI, styling, prototypes, tokens, typography, spacing, brand usage, or new design-system-aligned components.
+- **Do not invent** fonts, hex values, palettes, semantic color names, typography scales (sizes, weights, spacing, radii), or component conventions that are absent from **`system.md`** (foundations/tokens) or from the **component source file** paths **`system.md`** points to—unless the user clearly authorizes a new convention **and** you update **`system.md`** (paths/registry) and the **component file** (definitions) when applicable.
+- **Do not substitute arbitrary values** (“close enough” colors, eyeballed rem, unofficial weights) where **`system.md`**, linked component sources, or implementations define controlled values.
+- If requirements conflict with **`system.md`**, are ambiguous, or the spec does not yet cover something you need (**ask the user** for clarification rather than improvising).
+
+When in doubt: **pause and ask.**
