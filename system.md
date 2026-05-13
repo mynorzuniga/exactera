@@ -27,7 +27,7 @@ This file is the **canonical specification** for design tokens, typography, spac
 | Spacing scale (presentational up to `5rem`) | `components/design-system-sizing.tsx` |
 | Typography specimens | `components/design-system-typography.tsx` |
 | App shell / design system home + prototype routes | `app/page.tsx`, `app/prototype-1/page.tsx`, `app/prototype-2/page.tsx`, `app/layout.tsx`, `app/globals.css` |
-| Global header (V1 desktop + mobile drawer) + promotion bars | `components/design-system-header-footer.tsx` |
+| Global header (V1 desktop + mobile drawer) + promotion bars + client logos specimen | `components/design-system-header-footer.tsx`, `components/prototype-client-logos-strip.tsx` |
 | Brand logo asset | `public/logo.svg` |
 | Fonts (Next/font) | `app/layout.tsx` — `--font-geist-sans`, `--font-geist-mono`, `--font-plus-jakarta` |
 
@@ -131,6 +131,7 @@ Production may use **`> 5rem`**, but undocumented spacing **must not** be assume
 | CTA buttons (specimens) | `components/design-system-cta-buttons.tsx` |
 | Input (specimens) | `components/design-system-input.tsx` |
 | Header, footer, promotion bars V1–V2 (`HeaderV1`, `PromotionBarV2`) | `components/design-system-header-footer.tsx` |
+| Client logos strip (marquee) | `components/prototype-client-logos-strip.tsx` |
 
 Promotion bars use client state: the **X** control hides the bar until the page is reloaded (not persisted).
 

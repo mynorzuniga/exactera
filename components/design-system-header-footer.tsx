@@ -3,11 +3,12 @@
 import { Bars3Icon, ChevronDownIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserIcon } from "@heroicons/react/24/solid";
 import type { CSSProperties, MouseEvent, ReactNode } from "react";
-import { useEffect, useId, useState } from "react";
+import { createContext, useContext, useEffect, useId, useState } from "react";
 import Image from "next/image";
 
 import { BRAND_MINT, BRAND_NAVY, NEUTRAL_GREY } from "@/components/design-system-colors";
 import { SpeakToExpertPrimaryCtaButton } from "@/components/speak-to-expert-primary-cta-button";
+import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-strip";
 
 /**
  * Header and footer specimens (Components → Header and Footer tab).
@@ -52,9 +53,18 @@ import { SpeakToExpertPrimaryCtaButton } from "@/components/speak-to-expert-prim
  * - **Footer**: **`border-top` `NEUTRAL_GREY[200]`**, **`p-6`**, **full-width** **`SpeakToExpertPrimaryCtaButton`** (`w-full`).
  * - **Escape** closes drawer; **open** locks **body scroll** (`overflow: hidden`). **Drawer motion**: panel **slides in from the right** (`translateX(100%)` → `0`), **~420ms** **`ease-out`**; scrim **`opacity`** fades in sync; **`motion-reduce:transition-none`** respects **`prefers-reduced-motion`**.
  * - **Design system specimen**: render **`HeaderV1`** with **`variant="mobile-specimen"`** inside a **`~390px`** preview — forces mobile chrome at any viewport so the strip documents correctly.
+ * - **`headerChrome="glass-on-dark"`** (e.g. Prototype 2 video hero): bar is **`absolute` `top-0` `inset-x-0` `z-50`** over the hero; **frosted glass** (**`backdrop-blur-xl`**, **`bg-white/10`**, **`border-b`** **`white/15`**). **Logo** rendered **white** (CSS **`brightness-0 invert`**). **Bar** nav triggers, plain links, search, account, and menu icons use **white** idle / **brand mint 300** hover via **`HEADER_V1_LINK_VARS_OVERLAY`**. **Dropdown panels** and **mobile drawer** interior stay **white** with standard **navy → mint** links. **Primary CTA** unchanged (**mint** fill). Focus rings on bar: **white** ring; on light surfaces: **zinc-900** as default.
  *
  * **Tokens**: `BRAND_NAVY`, `BRAND_MINT`, `NEUTRAL_GREY` in `lib/design-system-color-tokens.ts` (specimen UI in `components/design-system-colors.tsx`).
  */
+
+export type HeaderV1Chrome = "default" | "glass-on-dark";
+
+const HeaderV1ChromeContext = createContext<HeaderV1Chrome>("default");
+
+function useHeaderV1Chrome(): HeaderV1Chrome {
+  return useContext(HeaderV1ChromeContext);
+}
 
 const HEADER_V1_LINK_VARS: CSSProperties = {
   ["--nav-idle" as string]: BRAND_NAVY[900],
@@ -62,29 +72,58 @@ const HEADER_V1_LINK_VARS: CSSProperties = {
   ["--chevron-idle" as string]: BRAND_NAVY[700],
 };
 
-/** Set to `true` to show the user icon hover menu (Client Portal, Account, Logout). */
+/** Bar-on-dark: white links; hover mint 300 for contrast on video overlays. */
+const HEADER_V1_LINK_VARS_OVERLAY: CSSProperties = {
+  ["--nav-idle" as string]: "#ffffff",
+  ["--nav-hover" as string]: BRAND_MINT[300],
+  ["--chevron-idle" as string]: "rgba(255,255,255,0.85)",
+};
+
 const HEADER_V1_NAV_ITEM_CLASSES =
   "text-[1rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
 
+const HEADER_V1_NAV_ITEM_CLASSES_OVERLAY =
+  "text-[1rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
+
 const HEADER_V1_ICON_BUTTON_CLASSES =
   "rounded-full p-2 text-[color:var(--nav-idle)] transition-colors hover:text-[color:var(--nav-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2";
+
+const HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY =
+  "rounded-full p-2 text-[color:var(--nav-idle)] transition-colors hover:text-[color:var(--nav-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent";
+
+function useHeaderV1BarTriggerChrome() {
+  const chrome = useHeaderV1Chrome();
+  const glass = chrome === "glass-on-dark";
+  return {
+    linkVars: glass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS,
+    navItemClasses: glass ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES,
+  };
+}
 
 function HeaderV1NavLink({
   href,
   children,
   className = "",
   onClick,
+  onLight = false,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
+  /** Use on white surfaces (drawer, flyout panels); ignores glass bar chrome. */
+  onLight?: boolean;
 }) {
+  const chrome = useHeaderV1Chrome();
+  const useOverlay = !onLight && chrome === "glass-on-dark";
+  const itemClasses = useOverlay ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES;
+  const linkVars = useOverlay ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+
   return (
     <a
       href={href}
-      className={`${HEADER_V1_NAV_ITEM_CLASSES} ${className}`.trim()}
-      style={HEADER_V1_LINK_VARS}
+      className={`${itemClasses} ${className}`.trim()}
+      style={linkVars}
       onClick={onClick}
     >
       {children}
@@ -131,6 +170,7 @@ function HeaderV1ServicesFlyoutDesktop() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const buttonId = useId();
+  const barChrome = useHeaderV1BarTriggerChrome();
 
   useEffect(() => {
     if (!open) {
@@ -154,8 +194,8 @@ function HeaderV1ServicesFlyoutDesktop() {
       <button
         id={buttonId}
         type="button"
-        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${HEADER_V1_NAV_ITEM_CLASSES}`}
-        style={HEADER_V1_LINK_VARS}
+        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${barChrome.navItemClasses}`}
+        style={barChrome.linkVars}
         aria-expanded={open}
         aria-haspopup="true"
         aria-controls={panelId}
@@ -260,7 +300,7 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
       </p>
       <div className="mt-4 space-y-5">
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap}>
+          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
             {SERVICES_TRANSFER_PRICING_TITLE}
           </HeaderV1NavLink>
           <p
@@ -271,7 +311,7 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
           </p>
         </div>
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap}>
+          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
             {SERVICES_RD_TITLE}
           </HeaderV1NavLink>
           <p
@@ -317,6 +357,7 @@ function HeaderV1SoftwareFlyoutDesktop() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const buttonId = useId();
+  const barChrome = useHeaderV1BarTriggerChrome();
 
   useEffect(() => {
     if (!open) {
@@ -340,8 +381,8 @@ function HeaderV1SoftwareFlyoutDesktop() {
       <button
         id={buttonId}
         type="button"
-        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${HEADER_V1_NAV_ITEM_CLASSES}`}
-        style={HEADER_V1_LINK_VARS}
+        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${barChrome.navItemClasses}`}
+        style={barChrome.linkVars}
         aria-expanded={open}
         aria-haspopup="true"
         aria-controls={panelId}
@@ -413,7 +454,7 @@ function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
       <div className="mt-4 space-y-5">
         {SOFTWARE_OFFERINGS.map((offering) => (
           <div key={offering.title}>
-            <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap}>
+            <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
               {offering.title}
             </HeaderV1NavLink>
             <p
@@ -433,6 +474,7 @@ function HeaderV1AboutFlyoutDesktop() {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const buttonId = useId();
+  const barChrome = useHeaderV1BarTriggerChrome();
 
   useEffect(() => {
     if (!open) {
@@ -456,8 +498,8 @@ function HeaderV1AboutFlyoutDesktop() {
       <button
         id={buttonId}
         type="button"
-        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${HEADER_V1_NAV_ITEM_CLASSES}`}
-        style={HEADER_V1_LINK_VARS}
+        className={`group inline-flex cursor-pointer items-center gap-1 border-0 bg-transparent p-0 ${barChrome.navItemClasses}`}
+        style={barChrome.linkVars}
         aria-expanded={open}
         aria-haspopup="true"
         aria-controls={panelId}
@@ -516,7 +558,7 @@ function HeaderV1AboutSectionMobile({ onClose }: { onClose: () => void }) {
       <ul className="mt-3 list-none space-y-1 p-0">
         {ABOUT_SUBLINKS.map((label) => (
           <li key={label}>
-            <HeaderV1NavLink href="#" className="block w-full py-2" onClick={linkTap}>
+            <HeaderV1NavLink href="#" className="block w-full py-2" onClick={linkTap} onLight>
               {label}
             </HeaderV1NavLink>
           </li>
@@ -609,6 +651,8 @@ function HeaderV1UserMenu() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const buttonId = useId();
+  const chrome = useHeaderV1Chrome();
+  const glass = chrome === "glass-on-dark";
 
   useEffect(() => {
     if (!open) {
@@ -632,8 +676,8 @@ function HeaderV1UserMenu() {
       <button
         id={buttonId}
         type="button"
-        className={HEADER_V1_ICON_BUTTON_CLASSES}
-        style={HEADER_V1_LINK_VARS}
+        className={glass ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES}
+        style={glass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS}
         aria-label="Account menu"
         aria-expanded={open}
         aria-haspopup="true"
@@ -675,10 +719,32 @@ export type HeaderV1Variant = "default" | "mobile-specimen";
 export function HeaderV1({
   className = "",
   variant = "default",
+  headerChrome = "default",
 }: {
   className?: string;
   variant?: HeaderV1Variant;
+  /** Frosted bar + white logo/nav on video/dark heroes (e.g. Prototype 2). */
+  headerChrome?: HeaderV1Chrome;
 }) {
+  return (
+    <HeaderV1ChromeContext.Provider value={headerChrome}>
+      <HeaderV1Inner className={className} variant={variant} />
+    </HeaderV1ChromeContext.Provider>
+  );
+}
+
+function HeaderV1Inner({
+  className = "",
+  variant,
+}: {
+  className?: string;
+  variant: HeaderV1Variant;
+}) {
+  const chrome = useHeaderV1Chrome();
+  const isGlass = chrome === "glass-on-dark";
+  const barIconClass = isGlass ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES;
+  const barIconVars = isGlass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const mobilePanelId = useId();
   const isForcedMobile = variant === "mobile-specimen";
@@ -722,8 +788,8 @@ export function HeaderV1({
     <>
       <button
         type="button"
-        className={HEADER_V1_ICON_BUTTON_CLASSES}
-        style={HEADER_V1_LINK_VARS}
+        className={barIconClass}
+        style={barIconVars}
         aria-label="Search"
       >
         <MagnifyingGlassIcon className="h-6 w-6" aria-hidden />
@@ -736,12 +802,16 @@ export function HeaderV1({
   return (
     <>
       <header
-        className={`h-[4.5rem] bg-white ${className}`.trim()}
-        style={{
-          borderBottomWidth: 1,
-          borderBottomStyle: "solid",
-          borderBottomColor: NEUTRAL_GREY[200],
-        }}
+        className={`h-[4.5rem] ${isGlass ? "absolute top-0 right-0 left-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-xl backdrop-saturate-150" : "bg-white"} ${className}`.trim()}
+        style={
+          isGlass
+            ? undefined
+            : {
+                borderBottomWidth: 1,
+                borderBottomStyle: "solid",
+                borderBottomColor: NEUTRAL_GREY[200],
+              }
+        }
       >
         <div className="mx-auto flex h-full max-w-[1320px] items-center justify-between gap-4 px-6">
           <div className="flex min-w-0 flex-1 items-center gap-6 lg:gap-8">
@@ -751,7 +821,7 @@ export function HeaderV1({
                 alt="Exactera"
                 width={182}
                 height={34}
-                className="h-8 w-auto"
+                className={`h-8 w-auto ${isGlass ? "brightness-0 invert" : ""}`.trim()}
               />
             </a>
 
@@ -773,8 +843,8 @@ export function HeaderV1({
             {iconCluster}
             <button
               type="button"
-              className={HEADER_V1_ICON_BUTTON_CLASSES}
-              style={HEADER_V1_LINK_VARS}
+              className={barIconClass}
+              style={barIconVars}
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileNavOpen}
               aria-controls={mobilePanelId}
@@ -858,6 +928,7 @@ export function HeaderV1({
                     href={item.href}
                     className="block w-full"
                     onClick={closeMobileNavFromLink}
+                    onLight
                   >
                     {item.label}
                   </HeaderV1NavLink>
@@ -949,6 +1020,25 @@ export function DesignSystemHeaderFooter() {
 
         <div className="mt-4 w-full max-w-[390px] overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 shadow-inner">
           <HeaderV1 variant="mobile-specimen" />
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+          Client logos strip
+        </h4>
+        <p className="mt-1 max-w-2xl text-sm leading-6 text-zinc-600">
+          Social proof band: centered headline (<strong>NEUTRAL_GREY</strong> 600),{" "}
+          <strong>NEUTRAL_GREY</strong> 50 background, bottom border 200. Logos are
+          greyscaled with subtle opacity; duplicated row marquees infinitely (
+          <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs">
+            globals.css
+          </code>
+          ). Full definition in <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs">prototype-client-logos-strip.tsx</code>.
+        </p>
+
+        <div className="mt-4 overflow-hidden rounded-lg border border-zinc-200">
+          <PrototypeClientLogosStrip />
         </div>
       </div>
     </section>

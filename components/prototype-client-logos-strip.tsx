@@ -3,7 +3,8 @@ import Image from "next/image";
 import { NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
 
 /**
- * Prototype 1: client logo marquee below hero. Assets: `public/clients/`.
+ * Prototype 1 + design system (Components → Header and Footer): client logo marquee
+ * below hero. Centered H4/H5-scale headline; assets: `public/clients/`.
  * Greyscale + opacity on logos; infinite horizontal scroll (see `globals.css`).
  */
 
@@ -72,11 +73,11 @@ export function PrototypeClientLogosStrip() {
         borderBottomColor: NEUTRAL_GREY[200],
       }}
     >
-      <div className="mx-auto max-w-[1320px] px-6 pt-8 sm:pt-10">
+      <div className="mx-auto max-w-[1320px] px-6 pt-8 text-center sm:pt-10">
         <h4
           id="prototype-client-logos-heading"
           className="text-[1.25rem] leading-[1.35] font-semibold tracking-[-0.005em] lg:text-[1.5rem] lg:leading-[1.3] lg:tracking-[-0.01em]"
-          style={{ color: NEUTRAL_GREY[700] }}
+          style={{ color: NEUTRAL_GREY[600] }}
         >
           Trusted by 700+ corporations and firms worldwide.
         </h4>
