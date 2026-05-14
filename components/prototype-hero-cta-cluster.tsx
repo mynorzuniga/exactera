@@ -35,13 +35,15 @@ function HeroSecondarySmallCta({
   );
 }
 
-/** Prototype 1 hero CTAs — same tokens and hover as design-system specimens. */
-export function PrototypeHeroCtaCluster() {
+/** Prototype hero CTAs — same tokens and hover as design-system specimens. */
+export function PrototypeHeroCtaCluster({ centered = false }: { centered?: boolean }) {
   return (
-    <div className="mt-8 flex max-w-full flex-col items-start gap-10">
+    <div
+      className={`mt-8 flex max-w-full flex-col gap-10 ${centered ? "items-center" : "items-start"}`}
+    >
       <SpeakToExpertPrimaryCtaButton />
 
-      <div className="flex flex-wrap gap-3">
+      <div className={`flex flex-wrap gap-3 ${centered ? "justify-center" : ""}`}>
         <HeroSecondarySmallCta leadingIcon={<ArrowsRightLeftIcon aria-hidden />}>
           Transfer Pricing
         </HeroSecondarySmallCta>

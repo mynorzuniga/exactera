@@ -46,7 +46,7 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - **Services** (desktop **`lg`+**): **hover** (and **focus-within**) opens a **flyout** under the trigger: two offerings — **Exactera Transfer Pricing** and **Exactera R&D Tax Credits** (titles are links **`href` `#`** until routes exist); **Body Standard** **`1rem` / `1.6`**, **normal** body copy in **`NEUTRAL_GREY[700]`**; **US**, **Puerto Rico**, **Canada** in the R&D blurb are **Body Standard semibold** links with **underline** / **`underline-offset-[3px]`**, **navy → mint** hover (**`HEADER_V1_LINK_VARS`**). **Mobile drawer**: **Services** block lists the same two offerings with copy and links before **Software**.
  * - **Software** (desktop **`lg`+**): **hover** flyout with three product rows — **Exactera Transfer Pricing** (distinct copy from **Services**), **ExactMatch**, **RoyaltyStat** (title links **`href` `#`**); body **Body Standard** **`1rem` / `1.6`**, **`NEUTRAL_GREY[700]`**. **Mobile drawer**: **Software** block lists the same three before **Pricing**.
  * - **About** (desktop **`lg`+**): **hover** flyout with links **Customers**, **Resources**, **News**, **Careers** (each **`href` `#`** until routes exist); compact list panel under the trigger (border **`NEUTRAL_GREY[200]`**, white card). **Mobile drawer**: **About** block lists the same four before **Pricing**.
- * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**) to the right; **`shadow-xl`**, white surface, **`NEUTRAL_GREY[200]`** border. **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
+ * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**) to the right — **white** icon on the control; container **`shadow-xl`**, **frosted glass** (**`bg-white/30`**, **`backdrop-blur-md`**, **`backdrop-saturate-100`**, **`border-white/35`**). **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
  * - **Primary CTA**: label **Speak to an Expert**; **Body Big** bold (**1.125rem**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See `lib/ds-cta-interaction.ts` / `SpeakToExpertPrimaryCtaButton`. On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and **Menu** (hamburger) only.
  *
  * ## Header V1 — mobile (&lt; `lg`)
@@ -58,12 +58,13 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - **Footer**: **`border-top` `NEUTRAL_GREY[200]`**, **`p-6`**, **full-width** **`SpeakToExpertPrimaryCtaButton`** (`w-full`).
  * - **Escape** closes drawer; **open** locks **body scroll** (`overflow: hidden`). **Drawer motion**: panel **slides in from the right** (`translateX(100%)` → `0`), **~420ms** **`ease-out`**; scrim **`opacity`** fades in sync; **`motion-reduce:transition-none`** respects **`prefers-reduced-motion`**.
  * - **Design system specimen**: render **`HeaderV1`** with **`variant="mobile-specimen"`** inside a **`~390px`** preview — forces mobile chrome at any viewport so the strip documents correctly.
- * - **`headerChrome="glass-on-dark"`** (e.g. Prototype 2 video hero): bar is **`absolute` `top-0` `inset-x-0` `z-50`** over the hero; **frosted glass** (**`backdrop-blur-xl`**, **`bg-white/10`**, **`border-b`** **`white/15`**). **Logo** rendered **white** (CSS **`brightness-0 invert`**). **Bar** nav triggers, plain links, search, account, and menu icons use **white** idle / **brand mint 300** hover via **`HEADER_V1_LINK_VARS_OVERLAY`**. **Dropdown panels** and **mobile drawer** interior stay **white** with standard **navy → mint** links. **Primary CTA** unchanged (**mint** fill). Focus rings on bar: **white** ring; on light surfaces: **zinc-900** as default.
+ * - **`headerChrome="glass-on-dark"`** (video / dark heroes): bar is **`absolute` `top-0` `inset-x-0` `z-50`** over the hero; **frosted glass** (**`backdrop-blur-xl`**, **`bg-white/10`**, **`border-b`** **`white/15`**). **Logo** rendered **white** (CSS **`brightness-0 invert`**). **Bar** nav triggers, plain links, search, account, and menu icons use **white** idle / **brand mint 300** hover via **`HEADER_V1_LINK_VARS_OVERLAY`**. **Dropdown panels** and **mobile drawer** interior stay **white** with standard **navy → mint** links. **Primary CTA** unchanged (**mint** fill). Focus rings on bar: **white** ring; on light surfaces: **zinc-900** as default.
+ * - **`headerChrome="glass-light"`** (e.g. Prototype 2): bar stays in page flow; **white** **frosted** surface **`bg-white/42`** + **`backdrop-blur-sm`**, **`backdrop-saturate-100`**; **bottom border** **`1px`** **`NEUTRAL_GREY[200]`** (no drop shadow). Nav / logo use standard **navy → mint** (**`HEADER_V1_LINK_VARS`**), same as **default**.
  *
  * **Tokens**: `BRAND_NAVY`, `BRAND_MINT`, `NEUTRAL_GREY` in `lib/design-system-color-tokens.ts` (specimen UI in `components/design-system-colors.tsx`).
  */
 
-export type HeaderV1Chrome = "default" | "glass-on-dark";
+export type HeaderV1Chrome = "default" | "glass-on-dark" | "glass-light";
 
 const HeaderV1ChromeContext = createContext<HeaderV1Chrome>("default");
 
@@ -752,8 +753,7 @@ function HeaderV1FloatingSearchBar({
         id={id}
         role="search"
         aria-label="Site search"
-        className="pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border border-solid bg-white p-4 shadow-xl"
-        style={{ borderColor: NEUTRAL_GREY[200] }}
+        className="pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border border-solid border-white/35 bg-white/30 p-4 shadow-xl backdrop-blur-md backdrop-saturate-100"
       >
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1" style={dsInputShellStyle("default")}>
@@ -775,8 +775,7 @@ function HeaderV1FloatingSearchBar({
           </div>
           <button
             type="button"
-            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[color:var(--close)] transition-colors hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
-            style={{ ["--close" as string]: BRAND_NAVY[700] } as CSSProperties}
+            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             aria-label="Close search"
             onClick={onClose}
           >
@@ -798,7 +797,7 @@ export function HeaderV1({
 }: {
   className?: string;
   variant?: HeaderV1Variant;
-  /** Frosted bar + white logo/nav on video/dark heroes (e.g. Prototype 2). */
+  /** Bar surface: `default` (white + bottom border), `glass-on-dark` (over dark heroes), or `glass-light` (frosted white + grey-200 bottom border, Prototype 2). */
   headerChrome?: HeaderV1Chrome;
 }) {
   return (
@@ -816,9 +815,10 @@ function HeaderV1Inner({
   variant: HeaderV1Variant;
 }) {
   const chrome = useHeaderV1Chrome();
-  const isGlass = chrome === "glass-on-dark";
-  const barIconClass = isGlass ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES;
-  const barIconVars = isGlass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+  const isGlassOnDark = chrome === "glass-on-dark";
+  const isGlassLight = chrome === "glass-light";
+  const barIconClass = isGlassOnDark ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES;
+  const barIconVars = isGlassOnDark ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -963,9 +963,15 @@ function HeaderV1Inner({
     <>
       <header
         ref={headerRef}
-        className={`h-[4.5rem] ${isGlass ? "absolute top-0 right-0 left-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-xl backdrop-saturate-150" : "bg-white"} ${className}`.trim()}
+        className={`h-[4.5rem] ${
+          isGlassOnDark
+            ? "absolute top-0 right-0 left-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-xl backdrop-saturate-150"
+            : isGlassLight
+              ? "z-50 bg-white/42 backdrop-blur-sm backdrop-saturate-100"
+              : "bg-white"
+        } ${className}`.trim()}
         style={
-          isGlass
+          isGlassOnDark
             ? undefined
             : {
                 borderBottomWidth: 1,
@@ -982,7 +988,7 @@ function HeaderV1Inner({
                 alt="Exactera"
                 width={182}
                 height={34}
-                className={`h-8 w-auto ${isGlass ? "brightness-0 invert" : ""}`.trim()}
+                className={`h-8 w-auto ${isGlassOnDark ? "brightness-0 invert" : ""}`.trim()}
               />
             </a>
 

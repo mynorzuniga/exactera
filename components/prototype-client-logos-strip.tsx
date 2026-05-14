@@ -3,7 +3,7 @@ import Image from "next/image";
 import { NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
 
 /**
- * Prototype 1 + design system (Components → Header and Footer): client logo marquee
+ * Prototype 1–2 + design system (Components → Header and Footer): client logo marquee
  * below hero. Centered H4/H5-scale headline; assets: `public/clients/`.
  * Greyscale + opacity on logos; infinite horizontal scroll (see `globals.css`).
  */
