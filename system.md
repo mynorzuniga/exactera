@@ -117,7 +117,7 @@ Production may use **`> 5rem`**, but undocumented spacing **must not** be assume
 | Item | Specification |
 |------|----------------|
 | Wordmark | `public/logo.svg` (`<Image src="/logo.svg" …>` on home headline). |
-| Page width | Wide content container `max-w-screen-2xl` on home (`app/page.tsx`). |
+| **Content max width (default)** | **`1320px`** — primary page and section columns use a centered container: **`mx-auto`**, **`w-full`**, **`max-w-[1320px]`**. Put **horizontal padding (`px-6`) on that same container** (or an immediate wrapper that shares exactly that width constraint), matching **`HeaderV1`**. Do **not** combine **`px-*` on a full‑bleed outer section** with a nested **`max-w-[1320px]`** only — that doubles horizontal inset and breaks alignment with hero/header. Vertical padding (`py-*`) belongs on whichever element matches each band’s intent (often the inner column, same as the prototype hero). |
 | Tone | Professional tax / corporate UI; defer copy and IA to stakeholder input when unclear.
 
 ---
@@ -131,6 +131,8 @@ Production may use **`> 5rem`**, but undocumented spacing **must not** be assume
 | CTA buttons (specimens) | `components/design-system-cta-buttons.tsx` |
 | Input (specimens) | `components/design-system-input.tsx` |
 | Header, footer, promotion bars V1–V2 (`HeaderV1`, `PromotionBarV2`) | `components/design-system-header-footer.tsx` |
+| Marketing footer prototype (`PrototypeExacteraFooter`) | `components/prototype-exactera-footer.tsx` |
+| Pre-footer smarter-tax CTA strip (`PrototypeSmarterTaxCtaStrip`) | `components/prototype-smarter-tax-cta-strip.tsx` |
 | Client logos strip (marquee) | `components/prototype-client-logos-strip.tsx` |
 
 Promotion bars use client state: the **X** control hides the bar until the page is reloaded (not persisted).

@@ -8,6 +8,11 @@ import { PrototypeHeroGrowthBackdrop } from "@/components/prototype-hero-growth-
 import { PrototypeHeroMobileCardsCarousel } from "@/components/prototype-hero-mobile-cards-carousel";
 import { PrototypeHeroSeeHowCard } from "@/components/prototype-hero-see-how-card";
 import { PrototypeHeroYoutubePreviewCard } from "@/components/prototype-hero-youtube-preview-card";
+import { PrototypeBlogTeaserSection } from "@/components/prototype-blog-teaser-section";
+import { PrototypeConsultantsSolutionsTabs } from "@/components/prototype-consultants-solutions-tabs";
+import { PrototypeExacteraFooter } from "@/components/prototype-exactera-footer";
+import { PrototypeSmarterTaxCtaStrip } from "@/components/prototype-smarter-tax-cta-strip";
+import { PrototypeWebinarSection } from "@/components/prototype-webinar-section";
 
 /**
  * White hero; light grey dots (`NEUTRAL_GREY`). Step **50** on `#fff` is effectively
@@ -96,6 +101,15 @@ export default function Prototype1Page() {
       </section>
 
       <PrototypeClientLogosStrip />
+
+      <PrototypeConsultantsSolutionsTabs />
+
+      <PrototypeWebinarSection />
+
+      <PrototypeBlogTeaserSection />
+
+      <PrototypeSmarterTaxCtaStrip />
+      <PrototypeExacteraFooter />
     </div>
   );
 }

@@ -9,7 +9,7 @@ const prototypeNavLinkClassName =
 export default function Home() {
   return (
     <div className="flex min-h-full flex-1 flex-col bg-zinc-50 font-sans text-zinc-900">
-      <main className="mx-auto w-full max-w-screen-2xl flex-1 px-6 py-12 sm:px-10 lg:px-12 lg:py-16">
+      <main className="mx-auto w-full max-w-[1320px] flex-1 px-6 py-12 sm:px-10 lg:px-12 lg:py-16">
         <header className="border-b border-zinc-200 pb-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
