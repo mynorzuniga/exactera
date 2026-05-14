@@ -11,7 +11,7 @@ import { DS_CTA_HOVER_TRANSITION_CLASS } from "@/lib/ds-cta-interaction";
 const VIDEO_SRC = "/Exactera-Overview-1.mp4";
 
 /** Prototype 1 — small “See How It Works” hero card + modal video (mint hover glow). */
-export function PrototypeHeroSeeHowCard() {
+export function PrototypeHeroSeeHowCard({ className = "" }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
@@ -53,7 +53,7 @@ export function PrototypeHeroSeeHowCard() {
 
   return (
     <>
-      <div className="w-full max-w-[17.5rem]">
+      <div className={`w-full max-w-[17.5rem] ${className}`.trim()}>
         <button
           type="button"
           className={`w-full cursor-pointer rounded-[0.5rem] border border-solid bg-white p-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${DS_CTA_HOVER_TRANSITION_CLASS}`}

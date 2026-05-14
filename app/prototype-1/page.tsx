@@ -5,6 +5,7 @@ import { HeaderV1, PromotionBarV2 } from "@/components/design-system-header-foot
 import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-strip";
 import { PrototypeHeroCtaCluster } from "@/components/prototype-hero-cta-cluster";
 import { PrototypeHeroGrowthBackdrop } from "@/components/prototype-hero-growth-backdrop";
+import { PrototypeHeroMobileCardsCarousel } from "@/components/prototype-hero-mobile-cards-carousel";
 import { PrototypeHeroSeeHowCard } from "@/components/prototype-hero-see-how-card";
 import { PrototypeHeroYoutubePreviewCard } from "@/components/prototype-hero-youtube-preview-card";
 
@@ -61,6 +62,8 @@ export default function Prototype1Page() {
               </p>
 
               <PrototypeHeroCtaCluster />
+
+              <PrototypeHeroMobileCardsCarousel />
             </div>
             <div className="relative mx-auto hidden w-full min-w-0 flex-col items-center overflow-visible lg:flex">
               {/* Main card centered; z-20 by default so it sits above side cards; hover/focus raises to z-40 */}

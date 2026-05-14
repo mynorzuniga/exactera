@@ -17,6 +17,10 @@ export type PrototypeHeroYoutubePreviewCardProps = {
   modalTitle: string;
   /** Base embed URL, e.g. `https://www.youtube.com/embed/VIDEO_ID` (no query) */
   youtubeEmbedBaseUrl: string;
+  /** Extra classes on the width-limiting wrapper (e.g. carousel slides). */
+  className?: string;
+  /** Match “See How” density (p-3, Body Big label) for uniform hero tiles. */
+  uniformTile?: boolean;
 };
 
 /** Hero-sized preview card; opens YouTube embed in modal (matches See How It Works styling, smaller). */
@@ -25,6 +29,8 @@ export function PrototypeHeroYoutubePreviewCard({
   label,
   modalTitle,
   youtubeEmbedBaseUrl,
+  className = "",
+  uniformTile = false,
 }: PrototypeHeroYoutubePreviewCardProps) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -111,10 +117,10 @@ export function PrototypeHeroYoutubePreviewCard({
 
   return (
     <>
-      <div className="w-full max-w-[15.5rem] lg:max-w-[17.5rem]">
+      <div className={`w-full max-w-[15.5rem] lg:max-w-[17.5rem] ${className}`.trim()}>
         <button
           type="button"
-          className={`w-full cursor-pointer rounded-[0.5rem] border border-solid bg-white p-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 lg:p-3 ${DS_CTA_HOVER_TRANSITION_CLASS}`}
+          className={`w-full cursor-pointer rounded-[0.5rem] border border-solid bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${DS_CTA_HOVER_TRANSITION_CLASS} ${uniformTile ? "p-3" : "p-2 lg:p-3"}`.trim()}
           style={{
             ...prototypeHeroPreviewCardShadow(hover),
             borderColor: hover ? BRAND_MINT[200] : NEUTRAL_GREY[200],
@@ -135,11 +141,19 @@ export function PrototypeHeroYoutubePreviewCard({
               alt=""
               fill
               className="object-cover"
-              sizes="(max-width: 1023px) 15.5rem, 17.5rem"
+              sizes={
+                uniformTile
+                  ? "(max-width: 1023px) 17.5rem, 17.5rem"
+                  : "(max-width: 1023px) 15.5rem, 17.5rem"
+              }
             />
           </div>
           <p
-            className="mt-2 line-clamp-3 text-center text-[0.875rem] leading-[1.55] font-semibold lg:mt-3 lg:text-[1rem] lg:leading-[1.6]"
+            className={
+              uniformTile
+                ? "mt-3 line-clamp-3 text-center text-[1rem] leading-[1.6] font-semibold"
+                : "mt-2 line-clamp-3 text-center text-[0.875rem] leading-[1.55] font-semibold lg:mt-3 lg:text-[1rem] lg:leading-[1.6]"
+            }
             style={{ color: BRAND_NAVY[900] }}
           >
             {label}
