@@ -2,11 +2,16 @@
 
 import { Bars3Icon, ChevronDownIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserIcon } from "@heroicons/react/24/solid";
-import type { CSSProperties, MouseEvent, ReactNode } from "react";
-import { createContext, useContext, useEffect, useId, useState } from "react";
+import type { CSSProperties, MouseEvent, ReactNode, RefObject } from "react";
+import { createContext, useCallback, useContext, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import { BRAND_MINT, BRAND_NAVY, NEUTRAL_GREY } from "@/components/design-system-colors";
+import {
+  DS_INPUT_TRAILING_ICON_WRAPPER_CLASS,
+  dsInputShellStyle,
+  dsTextInputClassName,
+} from "@/components/design-system-input";
 import { SpeakToExpertPrimaryCtaButton } from "@/components/speak-to-expert-primary-cta-button";
 import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-strip";
 
@@ -41,7 +46,7 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - **Services** (desktop **`lg`+**): **hover** (and **focus-within**) opens a **flyout** under the trigger: two offerings — **Exactera Transfer Pricing** and **Exactera R&D Tax Credits** (titles are links **`href` `#`** until routes exist); **Body Standard** **`1rem` / `1.6`**, **normal** body copy in **`NEUTRAL_GREY[700]`**; **US**, **Puerto Rico**, **Canada** in the R&D blurb are **Body Standard semibold** links with **underline** / **`underline-offset-[3px]`**, **navy → mint** hover (**`HEADER_V1_LINK_VARS`**). **Mobile drawer**: **Services** block lists the same two offerings with copy and links before **Software**.
  * - **Software** (desktop **`lg`+**): **hover** flyout with three product rows — **Exactera Transfer Pricing** (distinct copy from **Services**), **ExactMatch**, **RoyaltyStat** (title links **`href` `#`**); body **Body Standard** **`1rem` / `1.6`**, **`NEUTRAL_GREY[700]`**. **Mobile drawer**: **Software** block lists the same three before **Pricing**.
  * - **About** (desktop **`lg`+**): **hover** flyout with links **Customers**, **Resources**, **News**, **Careers** (each **`href` `#`** until routes exist); compact list panel under the trigger (border **`NEUTRAL_GREY[200]`**, white card). **Mobile drawer**: **About** block lists the same four before **Pricing**.
- * - **Search** / **User**: icon buttons; **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
+ * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**) to the right; **`shadow-xl`**, white surface, **`NEUTRAL_GREY[200]`** border. **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
  * - **Primary CTA**: label **Speak to an Expert**; **Body Big** bold (**1.125rem**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See `lib/ds-cta-interaction.ts` / `SpeakToExpertPrimaryCtaButton`. On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and **Menu** (hamburger) only.
  *
  * ## Header V1 — mobile (&lt; `lg`)
@@ -713,6 +718,76 @@ function HeaderV1UserMenu() {
   );
 }
 
+function HeaderV1FloatingSearchBar({
+  id,
+  open,
+  topPx,
+  panelRef,
+  inputRef,
+  value,
+  onChange,
+  onClose,
+}: {
+  id: string;
+  open: boolean;
+  /** Viewport Y (px) for top edge; header bottom + gap (see layout effect in HeaderV1Inner). */
+  topPx: number;
+  panelRef: RefObject<HTMLDivElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
+  value: string;
+  onChange: (v: string) => void;
+  onClose: () => void;
+}) {
+  if (!open) {
+    return null;
+  }
+
+  return (
+    <div
+      className="pointer-events-none fixed right-0 left-0 z-40 px-6"
+      style={{ top: `${topPx}px` }}
+    >
+      <div
+        ref={panelRef}
+        id={id}
+        role="search"
+        aria-label="Site search"
+        className="pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border border-solid bg-white p-4 shadow-xl"
+        style={{ borderColor: NEUTRAL_GREY[200] }}
+      >
+        <div className="flex items-center gap-3">
+          <div className="min-w-0 flex-1" style={dsInputShellStyle("default")}>
+            <div className="relative w-full">
+              <input
+                ref={inputRef}
+                type="search"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder="Search"
+                autoComplete="off"
+                aria-label="Search"
+                className={dsTextInputClassName({ trailingIcon: true })}
+              />
+              <span className={DS_INPUT_TRAILING_ICON_WRAPPER_CLASS} aria-hidden>
+                <MagnifyingGlassIcon />
+              </span>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-[color:var(--close)] transition-colors hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+            style={{ ["--close" as string]: BRAND_NAVY[700] } as CSSProperties}
+            aria-label="Close search"
+            onClick={onClose}
+          >
+            <XMarkIcon className="h-6 w-6" aria-hidden />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** Global chrome header — desktop + mobile; see file doc. */
 export type HeaderV1Variant = "default" | "mobile-specimen";
 
@@ -746,14 +821,53 @@ function HeaderV1Inner({
   const barIconVars = isGlass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const mobilePanelId = useId();
+  const searchPanelId = useId();
+  const searchTriggerRef = useRef<HTMLButtonElement>(null);
+  const searchPanelRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const [searchDockTopPx, setSearchDockTopPx] = useState(0);
   const isForcedMobile = variant === "mobile-specimen";
 
   const closeMobileNav = () => setMobileNavOpen(false);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
   const closeMobileNavFromLink = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     closeMobileNav();
   };
+
+  useLayoutEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+    const gapPx = 10;
+    const update = () => {
+      const el = headerRef.current;
+      if (!el) {
+        return;
+      }
+      setSearchDockTopPx(el.getBoundingClientRect().bottom + gapPx);
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, { capture: true, passive: true });
+    const parent = headerRef.current?.parentElement;
+    const ro =
+      parent && typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(update)
+        : null;
+    if (ro && parent) {
+      ro.observe(parent);
+    }
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+      ro?.disconnect();
+    };
+  }, [searchOpen]);
 
   useEffect(() => {
     if (!mobileNavOpen) {
@@ -779,6 +893,45 @@ function HeaderV1Inner({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [mobileNavOpen]);
 
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+    const onPointerDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (searchPanelRef.current?.contains(t)) {
+        return;
+      }
+      if (searchTriggerRef.current?.contains(t)) {
+        return;
+      }
+      setSearchOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown, true);
+    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+  }, [searchOpen]);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSearchOpen(false);
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [searchOpen]);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+    const t = window.setTimeout(() => searchInputRef.current?.focus(), 0);
+    return () => window.clearTimeout(t);
+  }, [searchOpen]);
+
   const desktopClusterClass = isForcedMobile ? "hidden" : "hidden lg:flex";
   const mobileClusterClass = isForcedMobile ? "flex" : "flex lg:hidden";
   const desktopNavClass = isForcedMobile ? "hidden" : "hidden min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-6 lg:flex";
@@ -787,10 +940,17 @@ function HeaderV1Inner({
   const iconCluster = (
     <>
       <button
+        ref={searchTriggerRef}
         type="button"
         className={barIconClass}
         style={barIconVars}
         aria-label="Search"
+        aria-expanded={searchOpen}
+        aria-controls={searchPanelId}
+        onClick={() => {
+          setMobileNavOpen(false);
+          setSearchOpen((o) => !o);
+        }}
       >
         <MagnifyingGlassIcon className="h-6 w-6" aria-hidden />
       </button>
@@ -802,6 +962,7 @@ function HeaderV1Inner({
   return (
     <>
       <header
+        ref={headerRef}
         className={`h-[4.5rem] ${isGlass ? "absolute top-0 right-0 left-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-xl backdrop-saturate-150" : "bg-white"} ${className}`.trim()}
         style={
           isGlass
@@ -848,7 +1009,10 @@ function HeaderV1Inner({
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileNavOpen}
               aria-controls={mobilePanelId}
-              onClick={() => setMobileNavOpen((o) => !o)}
+              onClick={() => {
+                setSearchOpen(false);
+                setMobileNavOpen((o) => !o);
+              }}
             >
               {mobileNavOpen ? (
                 <XMarkIcon className="h-6 w-6" aria-hidden />
@@ -859,6 +1023,17 @@ function HeaderV1Inner({
           </div>
         </div>
       </header>
+
+      <HeaderV1FloatingSearchBar
+        id={searchPanelId}
+        open={searchOpen}
+        topPx={searchDockTopPx}
+        panelRef={searchPanelRef}
+        inputRef={searchInputRef}
+        value={searchQuery}
+        onChange={setSearchQuery}
+        onClose={closeSearch}
+      />
 
       <div
         className={`fixed inset-0 z-[100] ${drawerViewportClass} ${
