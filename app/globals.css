@@ -94,3 +94,38 @@ body {
 .promotion-bar-message-scroll {
   -webkit-overflow-scrolling: touch;
 }
+
+/* Prototype hero — headline / body / CTA staggered rise-in (`prototype-1`, `prototype-2`) */
+@keyframes prototype-hero-copy-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.875rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.prototype-hero-reveal {
+  opacity: 0;
+  animation: prototype-hero-copy-reveal 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.prototype-hero-reveal-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.prototype-hero-reveal-delay-2 {
+  animation-delay: 0.42s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prototype-hero-reveal,
+  .prototype-hero-reveal-delay-1,
+  .prototype-hero-reveal-delay-2 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

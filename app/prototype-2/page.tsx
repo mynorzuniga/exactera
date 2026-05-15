@@ -47,14 +47,14 @@ export default function Prototype2Page() {
                 <div className="w-full max-w-full lg:max-w-[60%]">
                   <h1
                     id="prototype-2-hero-heading"
-                    className="text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em]"
+                    className="prototype-hero-reveal text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em]"
                     style={{ color: BASE_WHITE }}
                   >
                     Transform Your Tax Strategy.
                     Inform Growth.
                   </h1>
                   <p
-                    className="mt-6 text-[1rem] leading-[1.6] font-normal"
+                    className="prototype-hero-reveal prototype-hero-reveal-delay-1 mt-6 text-[1rem] leading-[1.6] font-normal"
                     style={{ color: NEUTRAL_GREY[200] }}
                   >
                     Combine AI-powered tax services with expert guidance to manage risk, unlock
@@ -62,7 +62,9 @@ export default function Prototype2Page() {
                     lifecycle.
                   </p>
 
-                  <PrototypeHeroCtaCluster primaryNoGlow />
+                  <div className="prototype-hero-reveal prototype-hero-reveal-delay-2">
+                    <PrototypeHeroCtaCluster primaryNoGlow />
+                  </div>
                 </div>
               </div>
 

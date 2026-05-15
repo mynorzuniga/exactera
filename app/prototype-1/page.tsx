@@ -25,7 +25,7 @@ export default function Prototype1Page() {
   return (
     <div className="flex min-h-[100dvh] flex-1 flex-col bg-zinc-50 [font-family:var(--font-plus-jakarta),system-ui,sans-serif]">
       <div className="flex shrink-0 flex-col">
-        <PromotionBarV2 />
+        <PromotionBarV2 readMoreAsLink />
         <HeaderV1 speakToExpertCtaVariant="secondary" speakToExpertLabel="Let's Talk" />
       </div>
 
@@ -44,14 +44,14 @@ export default function Prototype1Page() {
               <div className="-translate-y-[32px]">
               <h1
                 id="prototype-1-hero-heading"
-                className="text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em] lg:text-[3.75rem] lg:leading-[1.12]"
+                className="prototype-hero-reveal text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em] lg:text-[3.75rem] lg:leading-[1.12]"
                 style={{ color: BRAND_NAVY[900] }}
               >
                 Transform Your Tax Strategy.
                 Inform Growth.
               </h1>
               <p
-                className="mt-6 text-[1rem] leading-[1.6] font-normal"
+                className="prototype-hero-reveal prototype-hero-reveal-delay-1 mt-6 text-[1rem] leading-[1.6] font-normal"
                 style={{ color: NEUTRAL_GREY[700] }}
               >
                 Combine AI-powered tax services with expert guidance to manage risk, unlock
@@ -59,7 +59,9 @@ export default function Prototype1Page() {
                 lifecycle.
               </p>
 
-              <PrototypeHeroCtaCluster />
+              <div className="prototype-hero-reveal prototype-hero-reveal-delay-2">
+                <PrototypeHeroCtaCluster />
+              </div>
               </div>
 
               <PrototypeHeroMobileCardsCarousel />

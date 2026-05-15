@@ -21,6 +21,8 @@ export type PrototypeHeroYoutubePreviewCardProps = {
   className?: string;
   /** Match “See How” density (p-3, Body Big label) for uniform hero tiles. */
   uniformTile?: boolean;
+  /** Larger painted size on **`lg+`** only (`scale`); layout width unchanged vs default. */
+  size?: "default" | "large";
 };
 
 /** Hero-sized preview card; opens YouTube embed in modal (matches See How It Works styling, smaller). */
@@ -31,6 +33,7 @@ export function PrototypeHeroYoutubePreviewCard({
   youtubeEmbedBaseUrl,
   className = "",
   uniformTile = false,
+  size = "default",
 }: PrototypeHeroYoutubePreviewCardProps) {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -58,6 +61,22 @@ export function PrototypeHeroYoutubePreviewCard({
       document.body.style.overflow = prevOverflow;
     };
   }, [open]);
+
+  /**
+   * `large`: same layout widths as default; **lg+** only, scales the painted card so flex positions
+   * (magnetic column offsets) stay unchanged — wider `max-w` or row width is avoided on purpose.
+   */
+  const maxWidthClass = "max-w-[15.5rem] lg:max-w-[17.5rem]";
+
+  const desktopLargeVisual =
+    size === "large"
+      ? "motion-reduce:lg:scale-100 lg:origin-center lg:scale-[1.22] will-change-transform"
+      : "";
+
+  const imageSizes =
+    uniformTile
+      ? "(max-width: 1023px) 17.5rem, 17.5rem"
+      : "(max-width: 1023px) 15.5rem, 17.5rem";
 
   const modal = open ? (
     <div
@@ -117,7 +136,9 @@ export function PrototypeHeroYoutubePreviewCard({
 
   return (
     <>
-      <div className={`w-full max-w-[15.5rem] lg:max-w-[17.5rem] ${className}`.trim()}>
+      <div
+        className={`w-full ${maxWidthClass} ${desktopLargeVisual} ${className}`.trim()}
+      >
         <button
           type="button"
           className={`w-full cursor-pointer rounded-[0.5rem] border border-solid bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 ${DS_CTA_HOVER_TRANSITION_CLASS} ${uniformTile ? "p-3" : "p-2 lg:p-3"}`.trim()}
@@ -141,11 +162,7 @@ export function PrototypeHeroYoutubePreviewCard({
               alt=""
               fill
               className="object-cover"
-              sizes={
-                uniformTile
-                  ? "(max-width: 1023px) 17.5rem, 17.5rem"
-                  : "(max-width: 1023px) 15.5rem, 17.5rem"
-              }
+              sizes={imageSizes}
             />
           </div>
           <p

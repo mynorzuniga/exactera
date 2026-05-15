@@ -37,7 +37,7 @@ const zeroOffsets = (): { x: number; y: number }[] => [
  * toward the viewport pointer (`pointermove` on `window`). Listener only attaches at `lg+`;
  * `prefers-reduced-motion`: disabled.
  *
- * Layout matches `app/prototype-1/page.tsx` before extraction (sizes / positions unchanged).
+ * Layout matches `app/prototype-1/page.tsx` before extraction (nudges: column **20px** up, See How **12px** left).
  */
 export function PrototypeHeroMagneticCardsColumn() {
   const measureRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
@@ -95,11 +95,11 @@ export function PrototypeHeroMagneticCardsColumn() {
   };
 
   return (
-    <div className="relative mx-auto hidden w-full min-w-0 -translate-y-[20px] flex-col items-center overflow-visible lg:flex">
+    <div className="relative mx-auto hidden w-full min-w-0 -translate-y-[40px] flex-col items-center overflow-visible lg:flex">
       {/* Main card centered; z-20 by default so it sits above side cards; hover/focus raises to z-40 */}
       <div
         ref={bindMeasure(0)}
-        className="relative z-20 flex w-full justify-center opacity-70 transition-opacity duration-200 ease-out hover:z-40 hover:opacity-100 focus-within:z-40 focus-within:opacity-100"
+        className="relative z-20 flex w-full -translate-x-[12px] justify-center opacity-70 transition-opacity duration-200 ease-out hover:z-40 hover:opacity-100 focus-within:z-40 focus-within:opacity-100"
       >
         <div
           className="will-change-transform"
@@ -128,6 +128,7 @@ export function PrototypeHeroMagneticCardsColumn() {
                 label="Exactmatch is Here"
                 modalTitle="Exactera's Exactmatch is Here"
                 youtubeEmbedBaseUrl="https://www.youtube.com/embed/VRMaHcj7CL8"
+                size="large"
               />
             </div>
           </div>
@@ -147,6 +148,7 @@ export function PrototypeHeroMagneticCardsColumn() {
                 label="Transfer Pricing"
                 modalTitle="Transfer Pricing Overview"
                 youtubeEmbedBaseUrl="https://www.youtube.com/embed/eHfE4S9a14w"
+                size="large"
               />
             </div>
           </div>

@@ -29,7 +29,7 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  *
  * - **Bar**: same dimensions and layout as V1; **`BRAND_NAVY[900]`** fill.
  * - **Copy**: same as V1 (including **mobile** ticker / **`md`+** truncate).
- * - **Action**: **Read More** — same geometry as V1 (**`px-4`**); **no** fill; border and label **brand navy 200** (`BRAND_NAVY[200]`).
+ * - **Action**: **Read More** — same geometry as V1 (**`px-4`**) outline control by default; **no** fill; border and label **brand navy 200** (`BRAND_NAVY[200]`). Pass **`readMoreAsLink`** on **`PromotionBarV2`** to render **Read More** as a **Body Small** semibold **text link** (`0.875rem` / `1.55`, underline, same idle color) **inline after** the announcement copy; dismiss **X** stays alone on the **right** — used on Prototype 1.
  * - **Dismiss**: same **X** pattern as V1.
  * - Exported **`PromotionBarV2`** for page shells stacked flush above **`HeaderV1`** (e.g. Prototype 1).
  *
@@ -602,7 +602,14 @@ const PROMOTION_DISMISS_BUTTON_CLASSES =
 
 type PromotionBarVariant = "v1-mint" | "v2-navy";
 
-function PromotionBarDismissible({ variant }: { variant: PromotionBarVariant }) {
+function PromotionBarDismissible({
+  variant,
+  readMoreAsLink = false,
+}: {
+  variant: PromotionBarVariant;
+  /** When `true` (V2 only in practice), **Read More** is a text link instead of the outline button. */
+  readMoreAsLink?: boolean;
+}) {
   const [dismissed, setDismissed] = useState(false);
   if (dismissed) {
     return null;
@@ -612,45 +619,95 @@ function PromotionBarDismissible({ variant }: { variant: PromotionBarVariant }) 
   const barBg = isMint ? BRAND_MINT[600] : BRAND_NAVY[900];
   const readMoreColor = isMint ? BRAND_MINT[100] : BRAND_NAVY[200];
 
+  const readMoreLinkClasses =
+    "shrink-0 whitespace-nowrap text-[0.875rem] leading-[1.55] font-semibold underline underline-offset-[3px] transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-sm";
+
+  const announcementCopy = (
+    <>
+      <p className="hidden text-[0.875rem] leading-[1.55] font-semibold md:block truncate">
+        {PROMOTION_BAR_MESSAGE}
+      </p>
+      <div
+        className="promotion-bar-message-scroll md:hidden min-h-[1lh] overflow-x-hidden overflow-y-hidden motion-reduce:overflow-x-auto"
+        aria-label={PROMOTION_BAR_MESSAGE}
+      >
+        <div className="promotion-bar-message-track">
+          <span className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold">
+            {PROMOTION_BAR_MESSAGE}
+          </span>
+          <span
+            className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold"
+            aria-hidden
+          >
+            {PROMOTION_BAR_MESSAGE}
+          </span>
+        </div>
+      </div>
+    </>
+  );
+
+  const readMoreAnchor = (
+    <a
+      href="#"
+      className={readMoreLinkClasses}
+      style={{ color: readMoreColor }}
+    >
+      Read More
+    </a>
+  );
+
+  const readMoreOutlineButton = !readMoreAsLink ? (
+    <button
+      type="button"
+      className="inline-flex h-[2rem] cursor-pointer items-center justify-center rounded-[0.5rem] border border-solid px-4 text-[1rem] leading-[1.6] font-bold focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
+      style={{
+        backgroundColor: "transparent",
+        borderColor: readMoreColor,
+        color: readMoreColor,
+      }}
+    >
+      Read More
+    </button>
+  ) : null;
+
   return (
     <div
       className="h-[2.5rem] text-white"
       style={{ backgroundColor: barBg }}
     >
       <div className="mx-auto flex h-full max-w-[1320px] items-center gap-3 px-6 sm:gap-4">
-        <div className="min-w-0 flex-1">
-          <p className="hidden text-[0.875rem] leading-[1.55] font-semibold md:block truncate">
-            {PROMOTION_BAR_MESSAGE}
-          </p>
-          <div
-            className="promotion-bar-message-scroll md:hidden min-h-[1lh] overflow-x-hidden overflow-y-hidden motion-reduce:overflow-x-auto"
-            aria-label={PROMOTION_BAR_MESSAGE}
-          >
-            <div className="promotion-bar-message-track">
-              <span className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold">
-                {PROMOTION_BAR_MESSAGE}
-              </span>
-              <span
-                className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold"
-                aria-hidden
-              >
-                {PROMOTION_BAR_MESSAGE}
-              </span>
+        {readMoreAsLink ? (
+          <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+            {/*
+              Do not use flex-1 on the message alone: it stretches the text box across the bar,
+              so short copy leaves a huge gap and “Read More” sits by the dismiss icon.
+              inline-block + w-fit hugs short text; max-width + truncate still caps long lines.
+            */}
+            <p className="hidden min-w-0 max-w-[calc(100%-5.5rem)] truncate text-[0.875rem] leading-[1.55] font-semibold md:inline-block md:w-fit">
+              {PROMOTION_BAR_MESSAGE}
+            </p>
+            <div
+              className="promotion-bar-message-scroll max-w-[calc(100%-5.5rem)] min-w-0 flex-initial md:hidden min-h-[1lh] overflow-x-hidden overflow-y-hidden motion-reduce:overflow-x-auto"
+              aria-label={PROMOTION_BAR_MESSAGE}
+            >
+              <div className="promotion-bar-message-track">
+                <span className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold">
+                  {PROMOTION_BAR_MESSAGE}
+                </span>
+                <span
+                  className="inline-block whitespace-nowrap pr-12 text-[0.875rem] leading-[1.55] font-semibold"
+                  aria-hidden
+                >
+                  {PROMOTION_BAR_MESSAGE}
+                </span>
+              </div>
             </div>
+            {readMoreAnchor}
           </div>
-        </div>
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            className="inline-flex h-[2rem] cursor-pointer items-center justify-center rounded-[0.5rem] border border-solid px-4 text-[1rem] leading-[1.6] font-bold focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900"
-            style={{
-              backgroundColor: "transparent",
-              borderColor: readMoreColor,
-              color: readMoreColor,
-            }}
-          >
-            Read More
-          </button>
+        ) : (
+          <div className="min-w-0 flex-1">{announcementCopy}</div>
+        )}
+        {readMoreAsLink ? (
           <button
             type="button"
             className={PROMOTION_DISMISS_BUTTON_CLASSES}
@@ -659,7 +716,19 @@ function PromotionBarDismissible({ variant }: { variant: PromotionBarVariant }) 
           >
             <XMarkIcon className="h-5 w-5" aria-hidden />
           </button>
-        </div>
+        ) : (
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            {readMoreOutlineButton}
+            <button
+              type="button"
+              className={PROMOTION_DISMISS_BUTTON_CLASSES}
+              aria-label="Dismiss announcement"
+              onClick={() => setDismissed(true)}
+            >
+              <XMarkIcon className="h-5 w-5" aria-hidden />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -669,8 +738,12 @@ function PromotionBarV1() {
   return <PromotionBarDismissible variant="v1-mint" />;
 }
 
-export function PromotionBarV2() {
-  return <PromotionBarDismissible variant="v2-navy" />;
+export function PromotionBarV2({
+  readMoreAsLink = false,
+}: {
+  readMoreAsLink?: boolean;
+} = {}) {
+  return <PromotionBarDismissible variant="v2-navy" readMoreAsLink={readMoreAsLink} />;
 }
 
 function HeaderV1UserMenu() {
