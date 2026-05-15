@@ -12,7 +12,7 @@ import {
   dsInputShellStyle,
   dsTextInputClassName,
 } from "@/components/design-system-input";
-import { SpeakToExpertPrimaryCtaButton } from "@/components/speak-to-expert-primary-cta-button";
+import { SpeakToExpertPrimaryCtaButton, SpeakToExpertSecondaryCtaButton, SpeakToExpertTertiaryCtaButton } from "@/components/speak-to-expert-primary-cta-button";
 import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-strip";
 
 /**
@@ -46,8 +46,8 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - **Services** (desktop **`lg`+**): **hover** (and **focus-within**) opens a **flyout** under the trigger: two offerings — **Exactera Transfer Pricing** and **Exactera R&D Tax Credits** (titles are links **`href` `#`** until routes exist); **Body Standard** **`1rem` / `1.6`**, **normal** body copy in **`NEUTRAL_GREY[700]`**; **US**, **Puerto Rico**, **Canada** in the R&D blurb are **Body Standard semibold** links with **underline** / **`underline-offset-[3px]`**, **navy → mint** hover (**`HEADER_V1_LINK_VARS`**). **Mobile drawer**: **Services** block lists the same two offerings with copy and links before **Software**.
  * - **Software** (desktop **`lg`+**): **hover** flyout with three product rows — **Exactera Transfer Pricing** (distinct copy from **Services**), **ExactMatch**, **RoyaltyStat** (title links **`href` `#`**); body **Body Standard** **`1rem` / `1.6`**, **`NEUTRAL_GREY[700]`**. **Mobile drawer**: **Software** block lists the same three before **Pricing**.
  * - **About** (desktop **`lg`+**): **hover** flyout with links **Customers**, **Resources**, **News**, **Careers** (each **`href` `#`** until routes exist); compact list panel under the trigger (border **`NEUTRAL_GREY[200]`**, white card). **Mobile drawer**: **About** block lists the same four before **Pricing**.
- * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**) to the right — **white** icon on the control; container **`shadow-xl`**, **frosted glass** (**`bg-white/30`**, **`backdrop-blur-md`**, **`backdrop-saturate-100`**, **`border-white/35`**). **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
- * - **Primary CTA**: label **Speak to an Expert**; **Body Big** bold (**1.125rem**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See `lib/ds-cta-interaction.ts` / `SpeakToExpertPrimaryCtaButton`. On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and **Menu** (hamburger) only.
+ * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**): **`glass-clear`** — **white** close icon + **white** focus ring; **other chromes** — **`BRAND_NAVY[900]`** close + **zinc-900** ring (readable on the light frost shell). **Shell**: **`glass-clear`** — **no** panel fill or border, **`backdrop-blur-lg backdrop-saturate-100`** only (**`motion-reduce`**: weaker blur + **`bg-black/25`**); **else** — **`shadow-xl`**, frosted (**`bg-white/30`**, **`backdrop-blur-md`**, **`backdrop-saturate-100`**, **`border-white/35`**). **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
+ * - **Primary CTA** (default): label defaults to **Speak to an Expert** (override with **`speakToExpertLabel`**); **Body Big** bold (**`1.125rem`**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See **`lib/ds-cta-interaction.ts`**. Pass **`speakToExpertCtaVariant="secondary"`** for **`SpeakToExpertSecondaryCtaButton`** (navy surface per DS secondary). Pass **`speakToExpertCtaVariant="tertiary"`** for **`SpeakToExpertTertiaryCtaButton`** (DS tertiary fill + **brand navy 200** border, label, and icon). On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and **Menu** (hamburger) only.
  *
  * ## Header V1 — mobile (&lt; `lg`)
  *
@@ -59,12 +59,18 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - **Escape** closes drawer; **open** locks **body scroll** (`overflow: hidden`). **Drawer motion**: panel **slides in from the right** (`translateX(100%)` → `0`), **~420ms** **`ease-out`**; scrim **`opacity`** fades in sync; **`motion-reduce:transition-none`** respects **`prefers-reduced-motion`**.
  * - **Design system specimen**: render **`HeaderV1`** with **`variant="mobile-specimen"`** inside a **`~390px`** preview — forces mobile chrome at any viewport so the strip documents correctly.
  * - **`headerChrome="glass-on-dark"`** (video / dark heroes): bar is **`absolute` `top-0` `inset-x-0` `z-50`** over the hero; **frosted glass** (**`backdrop-blur-xl`**, **`bg-white/10`**, **`border-b`** **`white/15`**). **Logo** rendered **white** (CSS **`brightness-0 invert`**). **Bar** nav triggers, plain links, search, account, and menu icons use **white** idle / **brand mint 300** hover via **`HEADER_V1_LINK_VARS_OVERLAY`**. **Dropdown panels** and **mobile drawer** interior stay **white** with standard **navy → mint** links. **Primary CTA** unchanged (**mint** fill). Focus rings on bar: **white** ring; on light surfaces: **zinc-900** as default.
- * - **`headerChrome="glass-light"`** (e.g. Prototype 2): bar stays in page flow; **white** **frosted** surface **`bg-white/42`** + **`backdrop-blur-sm`**, **`backdrop-saturate-100`**; **bottom border** **`1px`** **`NEUTRAL_GREY[200]`** (no drop shadow). Nav / logo use standard **navy → mint** (**`HEADER_V1_LINK_VARS`**), same as **default**.
+ * - **`headerChrome="glass-light"`**: bar stays in page flow; **translucent white** frost **`bg-white/58`** + **`backdrop-blur-lg`**, **`backdrop-saturate-100`**; **bottom border** **`1px`** **`NEUTRAL_GREY[200]`**. Nav / logo use standard **navy → mint** (**`HEADER_V1_LINK_VARS`**), same as **default**.
+ * - **`headerChrome="glass-clear"`** (e.g. Prototype 2 video hero): bar stays in page flow; **no fill**, **`bg-transparent`** — **glass only** (**`backdrop-blur-lg`**, **`backdrop-saturate-100`**); **no** bottom border on the bar. **Logo**, nav triggers, plain links, search, account, and menu icons match **`glass-on-dark`**: **white** / **mint 300** hover (**`HEADER_V1_LINK_VARS_OVERLAY`**). **Desktop dropdowns** stay **white** with standard links. **Mobile drawer** uses a **dark frosted glass** panel (**`backdrop-blur-xl`**, **`bg-black/55`**, **`border-l`** **`white/15`**, dividers **`white/15`**) with **overlay** nav and **neutral grey 200** body copy; **`prefers-reduced-motion`**: weaker blur, **`bg-black/72`** fallback. **Drawer footer CTA** uses the same variant as the bar (including **tertiary**).
  *
  * **Tokens**: `BRAND_NAVY`, `BRAND_MINT`, `NEUTRAL_GREY` in `lib/design-system-color-tokens.ts` (specimen UI in `components/design-system-colors.tsx`).
  */
 
-export type HeaderV1Chrome = "default" | "glass-on-dark" | "glass-light";
+export type HeaderV1Chrome = "default" | "glass-on-dark" | "glass-light" | "glass-clear";
+
+/** Bar strip uses white logo and overlay nav/icon tokens (dropdown / drawer interiors stay light). */
+function headerBarUsesOverlayPalette(chrome: HeaderV1Chrome): boolean {
+  return chrome === "glass-on-dark" || chrome === "glass-clear";
+}
 
 const HeaderV1ChromeContext = createContext<HeaderV1Chrome>("default");
 
@@ -99,10 +105,10 @@ const HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY =
 
 function useHeaderV1BarTriggerChrome() {
   const chrome = useHeaderV1Chrome();
-  const glass = chrome === "glass-on-dark";
+  const overlay = headerBarUsesOverlayPalette(chrome);
   return {
-    linkVars: glass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS,
-    navItemClasses: glass ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES,
+    linkVars: overlay ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS,
+    navItemClasses: overlay ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES,
   };
 }
 
@@ -121,7 +127,7 @@ function HeaderV1NavLink({
   onLight?: boolean;
 }) {
   const chrome = useHeaderV1Chrome();
-  const useOverlay = !onLight && chrome === "glass-on-dark";
+  const useOverlay = !onLight && headerBarUsesOverlayPalette(chrome);
   const itemClasses = useOverlay ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES;
   const linkVars = useOverlay ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
 
@@ -139,6 +145,9 @@ function HeaderV1NavLink({
 
 const HEADER_V1_TEXT_LINK_IN_BODY_CLASSES =
   "font-semibold text-[color:var(--nav-idle)] underline underline-offset-[3px] transition-colors hover:text-[color:var(--nav-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-1 rounded-sm";
+
+const HEADER_V1_TEXT_LINK_IN_BODY_CLASSES_OVERLAY =
+  "font-semibold text-[color:var(--nav-idle)] underline underline-offset-[3px] transition-colors hover:text-[color:var(--nav-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1 focus-visible:ring-offset-transparent rounded-sm";
 
 const SERVICES_TRANSFER_PRICING_TITLE = "Exactera Transfer Pricing";
 const SERVICES_TRANSFER_PRICING_BODY =
@@ -288,47 +297,54 @@ function HeaderV1ServicesFlyoutDesktop() {
 }
 
 function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
+  const chrome = useHeaderV1Chrome();
+  const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
   };
 
+  const inlineBodyLinkClass = drawerGlass
+    ? HEADER_V1_TEXT_LINK_IN_BODY_CLASSES_OVERLAY
+    : HEADER_V1_TEXT_LINK_IN_BODY_CLASSES;
+  const inlineBodyLinkVars = drawerGlass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+
   return (
     <div
-      className="border-b border-solid py-4"
-      style={{ borderBottomColor: NEUTRAL_GREY[200] }}
+      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
+      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
     >
       <p
         className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: BRAND_NAVY[900] }}
+        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
       >
         Services
       </p>
       <div className="mt-4 space-y-5">
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
+          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
             {SERVICES_TRANSFER_PRICING_TITLE}
           </HeaderV1NavLink>
           <p
             className="mt-1.5 text-[1rem] leading-[1.6] font-normal"
-            style={{ color: NEUTRAL_GREY[700] }}
+            style={{ color: drawerGlass ? NEUTRAL_GREY[200] : NEUTRAL_GREY[700] }}
           >
             {SERVICES_TRANSFER_PRICING_BODY}
           </p>
         </div>
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
+          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
             {SERVICES_RD_TITLE}
           </HeaderV1NavLink>
           <p
             className="mt-1.5 text-[1rem] leading-[1.6] font-normal"
-            style={{ color: NEUTRAL_GREY[700] }}
+            style={{ color: drawerGlass ? NEUTRAL_GREY[200] : NEUTRAL_GREY[700] }}
           >
             {SERVICES_RD_BODY_PREFIX}
             <a
               href="#"
-              className={HEADER_V1_TEXT_LINK_IN_BODY_CLASSES}
-              style={HEADER_V1_LINK_VARS}
+              className={inlineBodyLinkClass}
+              style={inlineBodyLinkVars}
               onClick={linkTap}
             >
               US
@@ -336,8 +352,8 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
             ,{" "}
             <a
               href="#"
-              className={HEADER_V1_TEXT_LINK_IN_BODY_CLASSES}
-              style={HEADER_V1_LINK_VARS}
+              className={inlineBodyLinkClass}
+              style={inlineBodyLinkVars}
               onClick={linkTap}
             >
               Puerto Rico
@@ -345,8 +361,8 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
             , and{" "}
             <a
               href="#"
-              className={HEADER_V1_TEXT_LINK_IN_BODY_CLASSES}
-              style={HEADER_V1_LINK_VARS}
+              className={inlineBodyLinkClass}
+              style={inlineBodyLinkVars}
               onClick={linkTap}
             >
               Canada
@@ -441,6 +457,8 @@ function HeaderV1SoftwareFlyoutDesktop() {
 }
 
 function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
+  const chrome = useHeaderV1Chrome();
+  const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
@@ -448,24 +466,24 @@ function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="border-b border-solid py-4"
-      style={{ borderBottomColor: NEUTRAL_GREY[200] }}
+      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
+      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
     >
       <p
         className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: BRAND_NAVY[900] }}
+        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
       >
         Software
       </p>
       <div className="mt-4 space-y-5">
         {SOFTWARE_OFFERINGS.map((offering) => (
           <div key={offering.title}>
-            <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight>
+            <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
               {offering.title}
             </HeaderV1NavLink>
             <p
               className="mt-1.5 text-[1rem] leading-[1.6] font-normal"
-              style={{ color: NEUTRAL_GREY[700] }}
+              style={{ color: drawerGlass ? NEUTRAL_GREY[200] : NEUTRAL_GREY[700] }}
             >
               {offering.body}
             </p>
@@ -545,6 +563,8 @@ function HeaderV1AboutFlyoutDesktop() {
 }
 
 function HeaderV1AboutSectionMobile({ onClose }: { onClose: () => void }) {
+  const chrome = useHeaderV1Chrome();
+  const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onClose();
@@ -552,19 +572,19 @@ function HeaderV1AboutSectionMobile({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="border-b border-solid py-4"
-      style={{ borderBottomColor: NEUTRAL_GREY[200] }}
+      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
+      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
     >
       <p
         className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: BRAND_NAVY[900] }}
+        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
       >
         About
       </p>
       <ul className="mt-3 list-none space-y-1 p-0">
         {ABOUT_SUBLINKS.map((label) => (
           <li key={label}>
-            <HeaderV1NavLink href="#" className="block w-full py-2" onClick={linkTap} onLight>
+            <HeaderV1NavLink href="#" className="block w-full py-2" onClick={linkTap} onLight={!drawerGlass}>
               {label}
             </HeaderV1NavLink>
           </li>
@@ -658,7 +678,7 @@ function HeaderV1UserMenu() {
   const menuId = useId();
   const buttonId = useId();
   const chrome = useHeaderV1Chrome();
-  const glass = chrome === "glass-on-dark";
+  const overlayBar = headerBarUsesOverlayPalette(chrome);
 
   useEffect(() => {
     if (!open) {
@@ -682,8 +702,8 @@ function HeaderV1UserMenu() {
       <button
         id={buttonId}
         type="button"
-        className={glass ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES}
-        style={glass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS}
+        className={overlayBar ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES}
+        style={overlayBar ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS}
         aria-label="Account menu"
         aria-expanded={open}
         aria-haspopup="true"
@@ -728,6 +748,7 @@ function HeaderV1FloatingSearchBar({
   value,
   onChange,
   onClose,
+  headerChrome,
 }: {
   id: string;
   open: boolean;
@@ -738,10 +759,23 @@ function HeaderV1FloatingSearchBar({
   value: string;
   onChange: (v: string) => void;
   onClose: () => void;
+  headerChrome: HeaderV1Chrome;
 }) {
   if (!open) {
     return null;
   }
+
+  const glassClearShell = headerChrome === "glass-clear";
+
+  const shellClass = glassClearShell
+    ? "pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border-0 bg-transparent p-4 shadow-none backdrop-blur-lg backdrop-saturate-100 motion-reduce:backdrop-blur-none motion-reduce:bg-black/25"
+    : "pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border border-solid border-white/35 bg-white/30 p-4 shadow-xl backdrop-blur-md backdrop-saturate-100";
+
+  const closeButtonClass = glassClearShell
+    ? "flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+    : "flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent";
+
+  const closeIconStyle = glassClearShell ? undefined : { color: BRAND_NAVY[900] };
 
   return (
     <div
@@ -753,7 +787,7 @@ function HeaderV1FloatingSearchBar({
         id={id}
         role="search"
         aria-label="Site search"
-        className="pointer-events-auto mx-auto w-full max-w-xl rounded-[0.5rem] border border-solid border-white/35 bg-white/30 p-4 shadow-xl backdrop-blur-md backdrop-saturate-100"
+        className={shellClass}
       >
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1" style={dsInputShellStyle("default")}>
@@ -775,7 +809,8 @@ function HeaderV1FloatingSearchBar({
           </div>
           <button
             type="button"
-            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            className={closeButtonClass}
+            style={closeIconStyle}
             aria-label="Close search"
             onClick={onClose}
           >
@@ -790,19 +825,32 @@ function HeaderV1FloatingSearchBar({
 /** Global chrome header — desktop + mobile; see file doc. */
 export type HeaderV1Variant = "default" | "mobile-specimen";
 
+export type HeaderV1SpeakToExpertCtaVariant = "primary" | "secondary" | "tertiary";
+
 export function HeaderV1({
   className = "",
   variant = "default",
   headerChrome = "default",
+  speakToExpertCtaVariant = "primary",
+  speakToExpertLabel = "Speak to an Expert",
 }: {
   className?: string;
   variant?: HeaderV1Variant;
-  /** Bar surface: `default` (white + bottom border), `glass-on-dark` (over dark heroes), or `glass-light` (frosted white + grey-200 bottom border, Prototype 2). */
+  /** Bar surface: `default`, `glass-on-dark` (absolute bar + tint over dark heroes), `glass-light` (frosted white + border), or `glass-clear` (blur-only transparent bar + white bar chrome — Prototype 2). */
   headerChrome?: HeaderV1Chrome;
+  /** Desktop header strip + mobile drawer footer CTA treatment (`tertiary` = DS tertiary fill + navy 200 chrome). */
+  speakToExpertCtaVariant?: HeaderV1SpeakToExpertCtaVariant;
+  /** Header / drawer primary action label (default matches DS specimen copy). */
+  speakToExpertLabel?: string;
 }) {
   return (
     <HeaderV1ChromeContext.Provider value={headerChrome}>
-      <HeaderV1Inner className={className} variant={variant} />
+      <HeaderV1Inner
+        className={className}
+        variant={variant}
+        speakToExpertCtaVariant={speakToExpertCtaVariant}
+        speakToExpertLabel={speakToExpertLabel}
+      />
     </HeaderV1ChromeContext.Provider>
   );
 }
@@ -810,15 +858,21 @@ export function HeaderV1({
 function HeaderV1Inner({
   className = "",
   variant,
+  speakToExpertCtaVariant,
+  speakToExpertLabel,
 }: {
   className?: string;
   variant: HeaderV1Variant;
+  speakToExpertCtaVariant: HeaderV1SpeakToExpertCtaVariant;
+  speakToExpertLabel: string;
 }) {
   const chrome = useHeaderV1Chrome();
   const isGlassOnDark = chrome === "glass-on-dark";
   const isGlassLight = chrome === "glass-light";
-  const barIconClass = isGlassOnDark ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES;
-  const barIconVars = isGlassOnDark ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+  const isGlassClear = chrome === "glass-clear";
+  const barOverlayPalette = headerBarUsesOverlayPalette(chrome);
+  const barIconClass = barOverlayPalette ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES;
+  const barIconVars = barOverlayPalette ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
 
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -932,6 +986,19 @@ function HeaderV1Inner({
     return () => window.clearTimeout(t);
   }, [searchOpen]);
 
+  const SpeakToExpertHeaderCtaButton =
+    speakToExpertCtaVariant === "secondary"
+      ? SpeakToExpertSecondaryCtaButton
+      : speakToExpertCtaVariant === "tertiary"
+        ? SpeakToExpertTertiaryCtaButton
+        : SpeakToExpertPrimaryCtaButton;
+
+  /** Light opaque drawer: tertiary bar chrome is illegible here — fall back to secondary. Frosted glass-clear drawer keeps bar variant. */
+  const SpeakToExpertDrawerCtaButton =
+    speakToExpertCtaVariant === "tertiary" && !isGlassClear
+      ? SpeakToExpertSecondaryCtaButton
+      : SpeakToExpertHeaderCtaButton;
+
   const desktopClusterClass = isForcedMobile ? "hidden" : "hidden lg:flex";
   const mobileClusterClass = isForcedMobile ? "flex" : "flex lg:hidden";
   const desktopNavClass = isForcedMobile ? "hidden" : "hidden min-w-0 flex-wrap items-center gap-x-4 gap-y-2 sm:gap-x-6 lg:flex";
@@ -966,12 +1033,14 @@ function HeaderV1Inner({
         className={`h-[4.5rem] ${
           isGlassOnDark
             ? "absolute top-0 right-0 left-0 z-50 border-b border-white/15 bg-white/10 backdrop-blur-xl backdrop-saturate-150"
-            : isGlassLight
-              ? "z-50 bg-white/42 backdrop-blur-sm backdrop-saturate-100"
-              : "bg-white"
+            : isGlassClear
+              ? "relative z-50 bg-transparent backdrop-blur-lg backdrop-saturate-100"
+              : isGlassLight
+                ? "z-50 bg-white/58 backdrop-blur-lg backdrop-saturate-100"
+                : "bg-white"
         } ${className}`.trim()}
         style={
-          isGlassOnDark
+          isGlassOnDark || isGlassClear
             ? undefined
             : {
                 borderBottomWidth: 1,
@@ -988,7 +1057,7 @@ function HeaderV1Inner({
                 alt="Exactera"
                 width={182}
                 height={34}
-                className={`h-8 w-auto ${isGlassOnDark ? "brightness-0 invert" : ""}`.trim()}
+                className={`h-8 w-auto ${barOverlayPalette ? "brightness-0 invert" : ""}`.trim()}
               />
             </a>
 
@@ -1003,7 +1072,7 @@ function HeaderV1Inner({
 
           <div className={`${desktopClusterClass} shrink-0 items-center gap-6 sm:gap-10`}>
             <div className="flex items-center gap-3 sm:gap-4">{iconCluster}</div>
-            <SpeakToExpertPrimaryCtaButton />
+            <SpeakToExpertHeaderCtaButton label={speakToExpertLabel} />
           </div>
 
           <div className={`${mobileClusterClass} shrink-0 items-center gap-3`}>
@@ -1039,6 +1108,7 @@ function HeaderV1Inner({
         value={searchQuery}
         onChange={setSearchQuery}
         onClose={closeSearch}
+        headerChrome={chrome}
       />
 
       <div
@@ -1062,29 +1132,35 @@ function HeaderV1Inner({
           aria-modal={mobileNavOpen}
           aria-hidden={!mobileNavOpen}
           aria-label="Primary navigation"
-          className={`absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-white shadow-xl transition-transform duration-[420ms] ease-out motion-reduce:transition-none ${
-            mobileNavOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-          style={{
-            borderLeftWidth: 1,
-            borderLeftStyle: "solid",
-            borderLeftColor: NEUTRAL_GREY[200],
-          }}
+          className={`absolute inset-y-0 right-0 flex w-full max-w-sm flex-col shadow-xl transition-transform duration-[420ms] ease-out motion-reduce:transition-none ${
+            isGlassClear
+              ? "border-l border-solid border-white/15 bg-black/55 backdrop-blur-xl backdrop-saturate-150 motion-reduce:backdrop-blur-none motion-reduce:bg-black/72"
+              : "bg-white"
+          } ${mobileNavOpen ? "translate-x-0" : "translate-x-full"}`}
+          style={
+            isGlassClear
+              ? undefined
+              : {
+                  borderLeftWidth: 1,
+                  borderLeftStyle: "solid",
+                  borderLeftColor: NEUTRAL_GREY[200],
+                }
+          }
         >
             <div
-              className="flex h-[4.5rem] shrink-0 items-center justify-between border-b border-solid px-6"
-              style={{ borderBottomColor: NEUTRAL_GREY[200] }}
+              className={`flex h-[4.5rem] shrink-0 items-center justify-between border-b border-solid px-6 ${isGlassClear ? "border-white/15" : ""}`}
+              style={isGlassClear ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
             >
               <span
                 className="text-[1rem] leading-[1.6] font-semibold"
-                style={{ color: BRAND_NAVY[900] }}
+                style={{ color: isGlassClear ? "#ffffff" : BRAND_NAVY[900] }}
               >
                 Menu
               </span>
               <button
                 type="button"
-                className={HEADER_V1_ICON_BUTTON_CLASSES}
-                style={HEADER_V1_LINK_VARS}
+                className={isGlassClear ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES}
+                style={isGlassClear ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS}
                 aria-label="Close menu"
                 onClick={closeMobileNav}
               >
@@ -1102,14 +1178,14 @@ function HeaderV1Inner({
               {HEADER_V1_MOBILE_NAV_ITEMS.map((item) => (
                 <div
                   key={item.label}
-                  className="border-b border-solid py-4 last:border-b-0"
-                  style={{ borderBottomColor: NEUTRAL_GREY[200] }}
+                  className={`border-b border-solid py-4 last:border-b-0 ${isGlassClear ? "border-white/15" : ""}`}
+                  style={isGlassClear ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
                 >
                   <HeaderV1NavLink
                     href={item.href}
                     className="block w-full"
                     onClick={closeMobileNavFromLink}
-                    onLight
+                    onLight={!isGlassClear}
                   >
                     {item.label}
                   </HeaderV1NavLink>
@@ -1118,10 +1194,10 @@ function HeaderV1Inner({
             </nav>
 
             <div
-              className="shrink-0 border-t border-solid p-6"
-              style={{ borderTopColor: NEUTRAL_GREY[200] }}
+              className={`shrink-0 border-t border-solid p-6 ${isGlassClear ? "border-white/15" : ""}`}
+              style={isGlassClear ? undefined : { borderTopColor: NEUTRAL_GREY[200] }}
             >
-              <SpeakToExpertPrimaryCtaButton className="w-full" />
+              <SpeakToExpertDrawerCtaButton className="w-full" label={speakToExpertLabel} />
             </div>
           </div>
         </div>

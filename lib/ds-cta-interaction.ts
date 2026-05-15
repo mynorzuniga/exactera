@@ -33,3 +33,20 @@ export function secondaryCtaSurfaceStyle(hover: boolean): CSSProperties {
     color: BRAND_NAVY[900],
   };
 }
+
+/** DS tertiary idle fill — white `#ffffff` at 10% (`design-system-cta-buttons.tsx`). */
+const TERTIARY_CTA_FILL_IDLE = "rgba(255, 255, 255, 0.1)";
+/** Slightly stronger fill on hover. */
+const TERTIARY_CTA_FILL_HOVER = "rgba(255, 255, 255, 0.14)";
+
+/**
+ * Header tertiary on glass / dark imagery: tertiary-style translucent fill + **brand navy 200**
+ * border and label (full-opacity hex from ramp).
+ */
+export function tertiaryHeaderCtaSurfaceStyle(hover: boolean): CSSProperties {
+  return {
+    backgroundColor: hover ? TERTIARY_CTA_FILL_HOVER : TERTIARY_CTA_FILL_IDLE,
+    borderColor: BRAND_NAVY[200],
+    color: BRAND_NAVY[200],
+  };
+}

@@ -36,12 +36,19 @@ function HeroSecondarySmallCta({
 }
 
 /** Prototype hero CTAs — same tokens and hover as design-system specimens. */
-export function PrototypeHeroCtaCluster({ centered = false }: { centered?: boolean }) {
+export function PrototypeHeroCtaCluster({
+  centered = false,
+  primaryNoGlow = false,
+}: {
+  centered?: boolean;
+  /** Drops mint halo on primary — use on dark/video heroes (e.g. Prototype 2). */
+  primaryNoGlow?: boolean;
+}) {
   return (
     <div
       className={`mt-8 flex max-w-full flex-col gap-10 ${centered ? "items-center" : "items-start"}`}
     >
-      <SpeakToExpertPrimaryCtaButton />
+      <SpeakToExpertPrimaryCtaButton noGlow={primaryNoGlow} />
 
       <div className={`flex flex-wrap gap-3 ${centered ? "justify-center" : ""}`}>
         <HeroSecondarySmallCta leadingIcon={<ArrowsRightLeftIcon aria-hidden />}>

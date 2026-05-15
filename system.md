@@ -134,6 +134,7 @@ Production may use **`> 5rem`**, but undocumented spacing **must not** be assume
 | Marketing footer prototype (`PrototypeExacteraFooter`) | `components/prototype-exactera-footer.tsx` |
 | Pre-footer smarter-tax CTA strip (`PrototypeSmarterTaxCtaStrip`) | `components/prototype-smarter-tax-cta-strip.tsx` |
 | Client logos strip (marquee) | `components/prototype-client-logos-strip.tsx` |
+| Prototype 1 hero magnetic cards column (`PrototypeHeroMagneticCardsColumn`) | `components/prototype-hero-magnetic-cards-column.tsx` |
 
 Promotion bars use client state: the **X** control hides the bar until the page is reloaded (not persisted).
 
