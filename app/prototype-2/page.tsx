@@ -3,17 +3,29 @@ import type { Metadata } from "next";
 import { HeaderV1 } from "@/components/design-system-header-footer";
 import { PrototypeHeroBand2ResourceCards } from "@/components/prototype-hero-band2-resource-cards";
 import { PrototypeHeroCtaCluster } from "@/components/prototype-hero-cta-cluster";
-import { NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
+import { BRAND_MINT, BRAND_NAVY, NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
 
 export const metadata: Metadata = {
   title: "Exactera · Prototype 2",
   description: "Interactive prototype 2 for Exactera.",
 };
 
+/** `rgba(r, g, b, …)` channels from a design-system hex token. */
+function rgbChannelsFromTokenHex(hex: string): string {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `${r}, ${g}, ${b}`;
+}
+
 /** Base white (`system.md` foundations). */
 const BASE_WHITE = "#ffffff";
 
 export default function Prototype2Page() {
+  const navyRgb = rgbChannelsFromTokenHex(BRAND_NAVY[900]);
+  const navyDeepRgb = rgbChannelsFromTokenHex(BRAND_NAVY[950]);
+  const mintRgb = rgbChannelsFromTokenHex(BRAND_MINT[500]);
   return (
     <div className="flex min-h-[100dvh] flex-1 flex-col [font-family:var(--font-plus-jakarta),system-ui,sans-serif]">
       <main className="flex min-h-0 flex-1 flex-col">
@@ -33,7 +45,10 @@ export default function Prototype2Page() {
             <source src="/video1.mp4" type="video/mp4" />
           </video>
           <div
-            className="pointer-events-none absolute inset-0 z-[1] bg-black/50"
+            className="pointer-events-none absolute inset-0 z-[1]"
+            style={{
+              background: `linear-gradient(168deg, rgba(${navyRgb}, 0.48) 0%, rgba(0, 0, 0, 0.42) 46%, rgba(${mintRgb}, 0.12) 68%, rgba(${navyDeepRgb}, 0.34) 100%)`,
+            }}
             aria-hidden
           />
           <div className="relative z-10 flex min-h-0 flex-1 flex-col">

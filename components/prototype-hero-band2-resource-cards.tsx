@@ -6,7 +6,8 @@ import { BRAND_MINT, BRAND_NAVY } from "@/lib/design-system-color-tokens";
  * Prototype 2 — hero band 2. Cards alternate navy / mint tints (`color-mix` on tokens, low alpha
  * so video reads through); glass surface (`backdrop-blur-lg`). “Read more” matches **tertiary**
  * small geometry (`design-system-cta-buttons.tsx`: 2rem height, `px-4`, Body Standard, bold,
- * 0.5rem radius) with **white 70%** border + label and **white 10%** fill.
+ * 0.5rem radius) with **white 70%** border + label and **white 10%** fill. Entrance motion matches
+ * hero copy (`prototype-hero-reveal` in `globals.css`), with stepped delays card 1 → 2 → 3.
  */
 const CARDS: { tone: "navy" | "mint"; text: string }[] = [
   {
@@ -23,6 +24,13 @@ const CARDS: { tone: "navy" | "mint"; text: string }[] = [
   },
 ];
 
+/** Same motion as hero copy (`globals.css`); stepped delays so cards appear 1 → 2 → 3. */
+const BAND2_REVEAL_STEP = [
+  "prototype-hero-reveal",
+  "prototype-hero-reveal prototype-hero-reveal-delay-1",
+  "prototype-hero-reveal prototype-hero-reveal-delay-2",
+] as const;
+
 function cardSurfaceStyle(tone: "navy" | "mint"): CSSProperties {
   const base = tone === "navy" ? BRAND_NAVY[900] : BRAND_MINT[700];
   return { backgroundColor: `color-mix(in srgb, ${base} 22%, transparent)` };
@@ -33,10 +41,10 @@ export function PrototypeHeroBand2ResourceCards() {
     <div className="mx-auto w-full max-w-[1320px] px-6">
       <h2 className="sr-only">Spotlight articles</h2>
       <div className="flex w-full flex-col gap-6 md:flex-row md:items-stretch">
-        {CARDS.map((card) => (
+        {CARDS.map((card, index) => (
           <article
             key={card.text}
-            className="flex w-full min-w-0 flex-1 flex-col gap-6 rounded-[0.5rem] p-6 backdrop-blur-lg backdrop-saturate-100 md:basis-0 [font-family:var(--font-plus-jakarta),system-ui,sans-serif]"
+            className={`${BAND2_REVEAL_STEP[index]} relative top-0 flex w-full min-w-0 flex-1 flex-col gap-6 rounded-[0.5rem] p-6 backdrop-blur-lg backdrop-saturate-100 transition-[top] duration-200 ease-out hover:-top-0.5 motion-reduce:hover:top-0 md:basis-0 [font-family:var(--font-plus-jakarta),system-ui,sans-serif]`}
             style={cardSurfaceStyle(card.tone)}
           >
             <p className="text-[1rem] leading-[1.6] font-normal text-white">{card.text}</p>
