@@ -44,6 +44,9 @@ export default function Home() {
               <Link href="/prototype-2" className={prototypeNavLinkClassName}>
                 Prototype 2
               </Link>
+              <Link href="/prototype-3" className={prototypeNavLinkClassName}>
+                Prototype 3
+              </Link>
             </nav>
           </div>
         </header>

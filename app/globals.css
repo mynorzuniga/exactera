@@ -95,7 +95,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Prototype hero — headline / body / CTA staggered rise-in (`prototype-1`, `prototype-2`) */
+/* Prototype hero — headline / body / CTA staggered rise-in (`prototype-1`, `prototype-2`, `prototype-3`) */
 @keyframes prototype-hero-copy-reveal {
   from {
     opacity: 0;

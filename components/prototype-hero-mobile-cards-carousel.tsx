@@ -1,7 +1,11 @@
 "use client";
 
 import { PrototypeHeroSeeHowCard } from "@/components/prototype-hero-see-how-card";
-import { PrototypeHeroYoutubePreviewCard } from "@/components/prototype-hero-youtube-preview-card";
+import {
+  PrototypeHeroVideoPreviewCard,
+  PROTOTYPE_HERO_EXACTMATCH_VIDEO,
+  PROTOTYPE_HERO_TRANSFER_PRICING_VIDEO,
+} from "@/components/prototype-hero-video-preview-card";
 
 const SLIDE_WIDTH_CLASS =
   "w-[min(17.5rem,calc(100vw-3rem))] max-w-[min(17.5rem,calc(100vw-3rem))] shrink-0 snap-center snap-always";
@@ -21,23 +25,23 @@ export function PrototypeHeroMobileCardsCarousel() {
           <PrototypeHeroSeeHowCard className="max-w-none w-full" />
         </div>
         <div className={SLIDE_WIDTH_CLASS}>
-          <PrototypeHeroYoutubePreviewCard
-            className="max-w-none w-full"
+          <PrototypeHeroVideoPreviewCard
+            className="mx-auto w-full"
             uniformTile
-            previewSrc="/preview1.png"
+            compact
+            videoSrc={PROTOTYPE_HERO_EXACTMATCH_VIDEO}
             label="Exactmatch is Here"
             modalTitle="Exactera's Exactmatch is Here"
-            youtubeEmbedBaseUrl="https://www.youtube.com/embed/VRMaHcj7CL8"
           />
         </div>
         <div className={SLIDE_WIDTH_CLASS}>
-          <PrototypeHeroYoutubePreviewCard
-            className="max-w-none w-full"
+          <PrototypeHeroVideoPreviewCard
+            className="mx-auto w-full"
             uniformTile
-            previewSrc="/preview2.png"
+            compact
+            videoSrc={PROTOTYPE_HERO_TRANSFER_PRICING_VIDEO}
             label="Transfer Pricing"
             modalTitle="Transfer Pricing Overview"
-            youtubeEmbedBaseUrl="https://www.youtube.com/embed/eHfE4S9a14w"
           />
         </div>
       </div>

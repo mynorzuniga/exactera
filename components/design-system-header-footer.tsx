@@ -43,24 +43,24 @@ import { PrototypeClientLogosStrip } from "@/components/prototype-client-logos-s
  * - Font: Plus Jakarta Sans (`--font-plus-jakarta`).
  * - **Logo** (`/logo.svg`): visual anchor left of nav.
  * - **Nav links** (not inputs): Body Standard (`1rem` / `1.6`) **semibold** (600), **brand navy 900**; **hover** text and chevrons **brand mint 600**.
- * - **Services** (desktop **`lg`+**): **hover** (and **focus-within**) opens a **flyout** under the trigger: two offerings — **Exactera Transfer Pricing** and **Exactera R&D Tax Credits** (titles are links **`href` `#`** until routes exist); **Body Standard** **`1rem` / `1.6`**, **normal** body copy in **`NEUTRAL_GREY[700]`**; **US**, **Puerto Rico**, **Canada** in the R&D blurb are **Body Standard semibold** links with **underline** / **`underline-offset-[3px]`**, **navy → mint** hover (**`HEADER_V1_LINK_VARS`**). **Mobile drawer**: **Services** block lists the same two offerings with copy and links before **Software**.
- * - **Software** (desktop **`lg`+**): **hover** flyout with three product rows — **Exactera Transfer Pricing** (distinct copy from **Services**), **ExactMatch**, **RoyaltyStat** (title links **`href` `#`**); body **Body Standard** **`1rem` / `1.6`**, **`NEUTRAL_GREY[700]`**. **Mobile drawer**: **Software** block lists the same three before **Pricing**.
- * - **About** (desktop **`lg`+**): **hover** flyout with links **Customers**, **Resources**, **News**, **Careers** (each **`href` `#`** until routes exist); compact list panel under the trigger (border **`NEUTRAL_GREY[200]`**, white card). **Mobile drawer**: **About** block lists the same four before **Pricing**.
+ * - **Services** (desktop **`lg`+**): **hover** (and **focus-within**) opens a **flyout** under the trigger: two offerings — **Exactera Transfer Pricing** and **Exactera R&D Tax Credits** (titles are links **`href` `#`** until routes exist); **Body Standard** **`1rem` / `1.6`**, **normal** body copy in **`NEUTRAL_GREY[700]`**; **US**, **Puerto Rico**, **Canada** in the R&D blurb are **Body Standard semibold** links with **underline** / **`underline-offset-[3px]`**, **navy → mint** hover (**`HEADER_V1_LINK_VARS`**). **Mobile drawer**: **Services** is an **accordion** (collapsed by default); expanded, **Body Standard** **title links** **`BRAND_NAVY[700]`** (**softer white** on **`glass-clear`**), same body copy **before Software**.
+ * - **Software** (desktop **`lg`+**): **hover** flyout with three product rows — **Exactera Transfer Pricing** (distinct copy from **Services**), **ExactMatch**, **RoyaltyStat** (title links **`href` `#`**); body **Body Standard** **`1rem` / `1.6`**, **`NEUTRAL_GREY[700]`**. **Mobile drawer**: **Software** **accordion**; expanded, **Body Standard** **title links** **`BRAND_NAVY[700]`** (**softer white** on **`glass-clear`**), same body copy **before Pricing**.
+ * - **About** (desktop **`lg`+**): **hover** flyout with links **Customers**, **Resources**, **News**, **Careers** (each **`href` `#`** until routes exist); compact list panel under the trigger (border **`NEUTRAL_GREY[200]`**, white card). **Mobile drawer**: **About** **accordion**; expanded, **Body Standard** links at **`BRAND_NAVY[700]`** (**softer white** on **`glass-clear`**) **before Pricing**.
  * - **Search** / **User**: icon buttons; **Search** opens a **floating bar** pinned **just below** the **`<header>`** bar (`getBoundingClientRect().bottom` + **10px**, **`z-40`** under the glass header); **narrow** row (**`max-w-xl`**) with design-system **search field** (`type="search"`, trailing magnifying glass) plus **close** (**`XMarkIcon`**): **`glass-clear`** — **white** close icon + **white** focus ring; **other chromes** — **`BRAND_NAVY[900]`** close + **zinc-900** ring (readable on the light frost shell). **Shell**: **`glass-clear`** — **no** panel fill or border, **`backdrop-blur-lg backdrop-saturate-100`** only (**`motion-reduce`**: weaker blur + **`bg-black/25`**); **else** — **`shadow-xl`**, frosted (**`bg-white/30`**, **`backdrop-blur-md`**, **`backdrop-saturate-100`**, **`border-white/35`**). **Dismiss**: close control, **Escape**, **pointer down outside** the bar (trigger button excluded), or toggle **Search** again. **User** uses **Heroicons 24 solid** `UserIcon`. **Hover** opens `HeaderV1UserMenu`: **Client Portal**, **Account**, **Logout** (menu items are **`button`**s for now; wire routes or actions when available). Extra horizontal spacing separates this group from the primary CTA (no divider).
- * - **Primary CTA** (default): label defaults to **Speak to an Expert** (override with **`speakToExpertLabel`**); **Body Big** bold (**`1.125rem`**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See **`lib/ds-cta-interaction.ts`**. Pass **`speakToExpertCtaVariant="secondary"`** for **`SpeakToExpertSecondaryCtaButton`** (navy surface per DS secondary). Pass **`speakToExpertCtaVariant="tertiary"`** for **`SpeakToExpertTertiaryCtaButton`** (DS tertiary fill + **brand navy 200** border, label, and icon). On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and **Menu** (hamburger) only.
+ * - **Primary CTA** (default): label defaults to **Speak to an Expert** (override with **`speakToExpertLabel`**); **Body Big** bold (**`1.125rem`**); **mint 600** with tight **mint 300** glow; **hover** keeps the same glow and adds vertical gradient **mint 500** (top) → **mint 600** (bottom); **white** text; trailing **ArrowRightIcon** **slides right** and **thickens** on hover. See **`lib/ds-cta-interaction.ts`**. Pass **`speakToExpertCtaVariant="secondary"`** for **`SpeakToExpertSecondaryCtaButton`** (navy surface per DS secondary). Pass **`speakToExpertCtaVariant="tertiary"`** for **`SpeakToExpertTertiaryCtaButton`** (DS tertiary fill + **brand navy 200** border, label, and icon). On **viewport &lt; `lg` (1024px)** the CTA moves into the **mobile drawer** footer; the top bar shows **Search**, **Account**, and the **navigation** trigger (**hamburger**) only.
  *
  * ## Header V1 — mobile (&lt; `lg`)
  *
  * - Same **4.5rem** bar height, **white** fill, **1px** bottom border **`NEUTRAL_GREY[200]`**.
- * - **Top row**: **`max-width` 1320px**, **`px-6`**, **`justify-between`**. **Logo** (left). **Right cluster** (**`gap-3`**): **Search** and **Account** icon buttons (same 24px icons + **HEADER_V1_ICON_BUTTON_CLASSES** as desktop), then **Menu** — **Heroicons** 24 outline **`Bars3Icon`**, **`aria-expanded` / `aria-controls`** tied to the drawer panel, **`aria-label`**: “Open menu” / “Close menu” on the drawer close control.
- * - **Drawer** (open state): **`fixed inset-0`**. **Scrim**: **`bg-black` / 40%** (`rgba(0,0,0,0.4)`), **click** closes. **Panel**: **`fixed` `inset-y-0` `right-0`**, **`w-full` `max-w-sm`**, **white**, **`border-left` `1px` `NEUTRAL_GREY[200]`**, **`shadow-xl`**, **`z-index`** above scrim. **Header strip** (**4.5rem**): title **“Menu”** — **Body Standard** (**`1rem` / `1.6`**), **semibold**, **`BRAND_NAVY[900]`**; **close** — **`XMarkIcon`**, **`aria-label`**: “Close menu”.
- * - **Scrollable nav**: **Services** … **Software** … **About** … **Pricing** … **Contact** (section blocks for Services, Software, About; plain rows for Pricing and Contact). **Borders** between rows: **`1px` `NEUTRAL_GREY[200]`**.
+ * - **Top row**: **`max-width` 1320px**, **`px-6`**, **`justify-between`**. **Logo** (left). **Right cluster** (**`gap-3`**): **Search** and **Account** icon buttons (same 24px icons + **HEADER_V1_ICON_BUTTON_CLASSES** as desktop), then **navigation trigger** (**hamburger**) — **Heroicons** 24 outline **`Bars3Icon`**, **`aria-expanded` / `aria-controls`** tied to the drawer panel, **`aria-label`**: “Open navigation” / “Close navigation” on the bar control and drawer close controls.
+ * - **Drawer** (open state): **`fixed inset-0`**. **Scrim**: **`bg-black` / 40%** (`rgba(0,0,0,0.4)`), **click** closes. **Panel**: **`fixed` `inset-y-0` `right-0`**, **`w-full` `max-w-sm`**, **white**, **`border-left` `1px` `NEUTRAL_GREY[200]`**, **`shadow-xl`**, **`z-index`** above scrim. **Header strip** (**4.5rem**): title **“Navigation”** — **Body Standard** (**`1rem` / `1.6`**), **semibold**, **`BRAND_NAVY[900]`**; **close** — **`XMarkIcon`**, **`aria-label`**: “Close navigation”.
+ * - **Scrollable nav**: **Services** … **Software** … **About** … **Pricing** … **Contact** (**Services** / **Software** / **About** are **accordions** with chevron disclosure; **Pricing** and **Contact** stay plain rows). **Top-level rows** (**accordion triggers** + **Pricing** / **Contact**): **Body Big** (**`1.125rem` / `1.6`**), **semibold**, **`BRAND_NAVY[900]`** (**full white** on **`glass-clear`** drawer). Expanded **child** offering / About link titles: **Body Standard** (**`1rem` / `1.6`**), **`BRAND_NAVY[700]`** (**`rgba(255,255,255,0.82)`** idle on **`glass-clear`** drawer). **Borders** between rows: **`1px` `NEUTRAL_GREY[200]`** (white / **`white/15`** on **`glass-clear`** drawer).
  * - **Footer**: **`border-top` `NEUTRAL_GREY[200]`**, **`p-6`**, **full-width** **`SpeakToExpertPrimaryCtaButton`** (`w-full`).
  * - **Escape** closes drawer; **open** locks **body scroll** (`overflow: hidden`). **Drawer motion**: panel **slides in from the right** (`translateX(100%)` → `0`), **~420ms** **`ease-out`**; scrim **`opacity`** fades in sync; **`motion-reduce:transition-none`** respects **`prefers-reduced-motion`**.
  * - **Design system specimen**: render **`HeaderV1`** with **`variant="mobile-specimen"`** inside a **`~390px`** preview — forces mobile chrome at any viewport so the strip documents correctly.
  * - **`headerChrome="glass-on-dark"`** (video / dark heroes): bar is **`absolute` `top-0` `inset-x-0` `z-50`** over the hero; **frosted glass** (**`backdrop-blur-xl`**, **`bg-white/10`**, **`border-b`** **`white/15`**). **Logo** rendered **white** (CSS **`brightness-0 invert`**). **Bar** nav triggers, plain links, search, account, and menu icons use **white** idle / **brand mint 300** hover via **`HEADER_V1_LINK_VARS_OVERLAY`**. **Dropdown panels** and **mobile drawer** interior stay **white** with standard **navy → mint** links. **Primary CTA** unchanged (**mint** fill). Focus rings on bar: **white** ring; on light surfaces: **zinc-900** as default.
  * - **`headerChrome="glass-light"`**: bar stays in page flow; **translucent white** frost **`bg-white/58`** + **`backdrop-blur-lg`**, **`backdrop-saturate-100`**; **bottom border** **`1px`** **`NEUTRAL_GREY[200]`**. Nav / logo use standard **navy → mint** (**`HEADER_V1_LINK_VARS`**), same as **default**.
- * - **`headerChrome="glass-clear"`** (e.g. Prototype 2 video hero): bar stays in page flow; **no fill**, **`bg-transparent`** — **glass only** (**`backdrop-blur-lg`**, **`backdrop-saturate-100`**); **no** bottom border on the bar. **Logo**, nav triggers, plain links, search, account, and menu icons match **`glass-on-dark`**: **white** / **mint 300** hover (**`HEADER_V1_LINK_VARS_OVERLAY`**). **Desktop dropdowns** stay **white** with standard links. **Mobile drawer** uses a **dark frosted glass** panel (**`backdrop-blur-xl`**, **`bg-black/55`**, **`border-l`** **`white/15`**, dividers **`white/15`**) with **overlay** nav and **neutral grey 200** body copy; **`prefers-reduced-motion`**: weaker blur, **`bg-black/72`** fallback. **Drawer footer CTA** uses the same variant as the bar (including **tertiary**).
+ * - **`headerChrome="glass-clear"`** (e.g. **Prototype 2** / **Prototype 3** video heroes): bar stays in page flow; **no fill**, **`bg-transparent`** — **glass only** (**`backdrop-blur-lg`**, **`backdrop-saturate-100`**); **no** bottom border on the bar. **Logo**, nav triggers, plain links, search, account, and menu icons match **`glass-on-dark`**: **white** / **mint 300** hover (**`HEADER_V1_LINK_VARS_OVERLAY`**). **Desktop dropdowns** stay **white** with standard links. **Mobile drawer** uses a **dark frosted glass** panel (**`backdrop-blur-xl`**, **`bg-black/55`**, **`border-l`** **`white/15`**, dividers **`white/15`**) with **overlay** nav and **neutral grey 200** body copy; **`prefers-reduced-motion`**: weaker blur, **`bg-black/72`** fallback. **Drawer footer CTA** uses the same variant as the bar (including **tertiary**).
  *
  * **Tokens**: `BRAND_NAVY`, `BRAND_MINT`, `NEUTRAL_GREY` in `lib/design-system-color-tokens.ts` (specimen UI in `components/design-system-colors.tsx`).
  */
@@ -84,6 +84,13 @@ const HEADER_V1_LINK_VARS: CSSProperties = {
   ["--chevron-idle" as string]: BRAND_NAVY[700],
 };
 
+/** Mobile accordion body titles: softer than primary row (**`BRAND_NAVY[900]`**). */
+const HEADER_V1_LINK_VARS_MOBILE_ACCORDION_CHILD: CSSProperties = {
+  ["--nav-idle" as string]: BRAND_NAVY[700],
+  ["--nav-hover" as string]: BRAND_MINT[600],
+  ["--chevron-idle" as string]: BRAND_NAVY[600],
+};
+
 /** Bar-on-dark: white links; hover mint 300 for contrast on video overlays. */
 const HEADER_V1_LINK_VARS_OVERLAY: CSSProperties = {
   ["--nav-idle" as string]: "#ffffff",
@@ -91,11 +98,25 @@ const HEADER_V1_LINK_VARS_OVERLAY: CSSProperties = {
   ["--chevron-idle" as string]: "rgba(255,255,255,0.85)",
 };
 
+/** Glass mobile drawer: child offering / About links softer than accordion trigger (**full white**). */
+const HEADER_V1_LINK_VARS_MOBILE_ACCORDION_CHILD_OVERLAY: CSSProperties = {
+  ["--nav-idle" as string]: "rgba(255,255,255,0.82)",
+  ["--nav-hover" as string]: BRAND_MINT[300],
+  ["--chevron-idle" as string]: "rgba(255,255,255,0.65)",
+};
+
 const HEADER_V1_NAV_ITEM_CLASSES =
   "text-[1rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
 
 const HEADER_V1_NAV_ITEM_CLASSES_OVERLAY =
   "text-[1rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
+
+/** Drawer top-level rows: **Body Big** (**`1.125rem` / `1.6`**) per `system.md`; accordions use the same on their trigger **`button`**. */
+const HEADER_V1_NAV_ITEM_CLASSES_MOBILE_DRAWER_PRIMARY =
+  "text-[1.125rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2 text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
+
+const HEADER_V1_NAV_ITEM_CLASSES_MOBILE_DRAWER_PRIMARY_OVERLAY =
+  "text-[1.125rem] leading-[1.6] font-semibold no-underline transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent text-[color:var(--nav-idle)] hover:text-[color:var(--nav-hover)]";
 
 const HEADER_V1_ICON_BUTTON_CLASSES =
   "rounded-full p-2 text-[color:var(--nav-idle)] transition-colors hover:text-[color:var(--nav-hover)] focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 focus-visible:ring-offset-2";
@@ -118,6 +139,8 @@ function HeaderV1NavLink({
   className = "",
   onClick,
   onLight = false,
+  mobileAccordionChild = false,
+  mobileDrawerPrimaryRow = false,
 }: {
   href: string;
   children: ReactNode;
@@ -125,11 +148,29 @@ function HeaderV1NavLink({
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
   /** Use on white surfaces (drawer, flyout panels); ignores glass bar chrome. */
   onLight?: boolean;
+  /** Offering / About titles inside mobile accordions (**navy 700** vs row **900**; softer white on **glass-clear** drawer). */
+  mobileAccordionChild?: boolean;
+  /** **Pricing** / **Contact** in the drawer (**Body Big** vs **Body Standard** for accordion children). */
+  mobileDrawerPrimaryRow?: boolean;
 }) {
   const chrome = useHeaderV1Chrome();
   const useOverlay = !onLight && headerBarUsesOverlayPalette(chrome);
-  const itemClasses = useOverlay ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES;
-  const linkVars = useOverlay ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+
+  let itemClasses: string;
+  if (mobileDrawerPrimaryRow) {
+    itemClasses = useOverlay
+      ? HEADER_V1_NAV_ITEM_CLASSES_MOBILE_DRAWER_PRIMARY_OVERLAY
+      : HEADER_V1_NAV_ITEM_CLASSES_MOBILE_DRAWER_PRIMARY;
+  } else {
+    itemClasses = useOverlay ? HEADER_V1_NAV_ITEM_CLASSES_OVERLAY : HEADER_V1_NAV_ITEM_CLASSES;
+  }
+
+  let linkVars: CSSProperties = useOverlay ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
+  if (mobileAccordionChild) {
+    linkVars = useOverlay
+      ? HEADER_V1_LINK_VARS_MOBILE_ACCORDION_CHILD_OVERLAY
+      : HEADER_V1_LINK_VARS_MOBILE_ACCORDION_CHILD;
+  }
 
   return (
     <a
@@ -296,7 +337,65 @@ function HeaderV1ServicesFlyoutDesktop() {
   );
 }
 
+function HeaderV1MobileAccordionSection({
+  title,
+  drawerGlass,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  drawerGlass: boolean;
+  open: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  const headingId = useId();
+  const panelId = useId();
+
+  return (
+    <div
+      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
+      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
+    >
+      <h3 className="m-0 p-0">
+        <button
+          type="button"
+          id={headingId}
+          className={`flex w-full cursor-pointer items-center justify-between gap-3 border-0 bg-transparent p-0 text-left text-[1.125rem] leading-[1.6] font-semibold focus:outline-none focus-visible:ring-2 ${
+            drawerGlass
+              ? "text-white focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              : "focus-visible:ring-zinc-900 focus-visible:ring-offset-2"
+          }`}
+          style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+        >
+          {title}
+          <ChevronDownIcon
+            aria-hidden
+            className={`h-5 w-5 shrink-0 transition-transform duration-200 ease-out motion-reduce:transition-none ${open ? "rotate-180" : ""}`}
+            style={{ color: drawerGlass ? "rgba(255,255,255,0.85)" : BRAND_NAVY[700] }}
+          />
+        </button>
+      </h3>
+      {open ? (
+        <div
+          id={panelId}
+          role="region"
+          aria-labelledby={headingId}
+          className="mt-4"
+        >
+          {children}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
+  const [accordionOpen, setAccordionOpen] = useState(false);
   const chrome = useHeaderV1Chrome();
   const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -310,19 +409,21 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
   const inlineBodyLinkVars = drawerGlass ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS;
 
   return (
-    <div
-      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
-      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
+    <HeaderV1MobileAccordionSection
+      title="Services"
+      drawerGlass={drawerGlass}
+      open={accordionOpen}
+      onToggle={() => setAccordionOpen((o) => !o)}
     >
-      <p
-        className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
-      >
-        Services
-      </p>
-      <div className="mt-4 space-y-5">
+      <div className="space-y-5">
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
+          <HeaderV1NavLink
+            href="#"
+            className="block w-full"
+            mobileAccordionChild
+            onClick={linkTap}
+            onLight={!drawerGlass}
+          >
             {SERVICES_TRANSFER_PRICING_TITLE}
           </HeaderV1NavLink>
           <p
@@ -333,7 +434,13 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
           </p>
         </div>
         <div>
-          <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
+          <HeaderV1NavLink
+            href="#"
+            className="block w-full"
+            mobileAccordionChild
+            onClick={linkTap}
+            onLight={!drawerGlass}
+          >
             {SERVICES_RD_TITLE}
           </HeaderV1NavLink>
           <p
@@ -371,7 +478,7 @@ function HeaderV1ServicesSectionMobile({ onClose }: { onClose: () => void }) {
           </p>
         </div>
       </div>
-    </div>
+    </HeaderV1MobileAccordionSection>
   );
 }
 
@@ -457,6 +564,7 @@ function HeaderV1SoftwareFlyoutDesktop() {
 }
 
 function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
+  const [accordionOpen, setAccordionOpen] = useState(false);
   const chrome = useHeaderV1Chrome();
   const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -465,20 +573,22 @@ function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div
-      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
-      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
+    <HeaderV1MobileAccordionSection
+      title="Software"
+      drawerGlass={drawerGlass}
+      open={accordionOpen}
+      onToggle={() => setAccordionOpen((o) => !o)}
     >
-      <p
-        className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
-      >
-        Software
-      </p>
-      <div className="mt-4 space-y-5">
+      <div className="space-y-5">
         {SOFTWARE_OFFERINGS.map((offering) => (
           <div key={offering.title}>
-            <HeaderV1NavLink href="#" className="block w-full" onClick={linkTap} onLight={!drawerGlass}>
+            <HeaderV1NavLink
+              href="#"
+              className="block w-full"
+              mobileAccordionChild
+              onClick={linkTap}
+              onLight={!drawerGlass}
+            >
               {offering.title}
             </HeaderV1NavLink>
             <p
@@ -490,7 +600,7 @@ function HeaderV1SoftwareSectionMobile({ onClose }: { onClose: () => void }) {
           </div>
         ))}
       </div>
-    </div>
+    </HeaderV1MobileAccordionSection>
   );
 }
 
@@ -563,6 +673,7 @@ function HeaderV1AboutFlyoutDesktop() {
 }
 
 function HeaderV1AboutSectionMobile({ onClose }: { onClose: () => void }) {
+  const [accordionOpen, setAccordionOpen] = useState(false);
   const chrome = useHeaderV1Chrome();
   const drawerGlass = chrome === "glass-clear";
   const linkTap = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -571,26 +682,28 @@ function HeaderV1AboutSectionMobile({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div
-      className={`border-b border-solid py-4 ${drawerGlass ? "border-white/15" : ""}`}
-      style={drawerGlass ? undefined : { borderBottomColor: NEUTRAL_GREY[200] }}
+    <HeaderV1MobileAccordionSection
+      title="About"
+      drawerGlass={drawerGlass}
+      open={accordionOpen}
+      onToggle={() => setAccordionOpen((o) => !o)}
     >
-      <p
-        className="text-[1rem] leading-[1.6] font-semibold"
-        style={{ color: drawerGlass ? "#ffffff" : BRAND_NAVY[900] }}
-      >
-        About
-      </p>
-      <ul className="mt-3 list-none space-y-1 p-0">
+      <ul className="list-none space-y-1 p-0">
         {ABOUT_SUBLINKS.map((label) => (
           <li key={label}>
-            <HeaderV1NavLink href="#" className="block w-full py-2" onClick={linkTap} onLight={!drawerGlass}>
+            <HeaderV1NavLink
+              href="#"
+              className="block w-full py-2"
+              mobileAccordionChild
+              onClick={linkTap}
+              onLight={!drawerGlass}
+            >
               {label}
             </HeaderV1NavLink>
           </li>
         ))}
       </ul>
-    </div>
+    </HeaderV1MobileAccordionSection>
   );
 }
 
@@ -909,7 +1022,7 @@ export function HeaderV1({
 }: {
   className?: string;
   variant?: HeaderV1Variant;
-  /** Bar surface: `default`, `glass-on-dark` (absolute bar + tint over dark heroes), `glass-light` (frosted white + border), or `glass-clear` (blur-only transparent bar + white bar chrome — Prototype 2). */
+  /** Bar surface: `default`, `glass-on-dark` (absolute bar + tint over dark heroes), `glass-light` (frosted white + border), or `glass-clear` (blur-only transparent bar + white bar chrome — Prototype 2 / 3). */
   headerChrome?: HeaderV1Chrome;
   /** Desktop header strip + mobile drawer footer CTA treatment (`tertiary` = DS tertiary fill + navy 200 chrome). */
   speakToExpertCtaVariant?: HeaderV1SpeakToExpertCtaVariant;
@@ -1154,7 +1267,7 @@ function HeaderV1Inner({
               type="button"
               className={barIconClass}
               style={barIconVars}
-              aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+              aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
               aria-expanded={mobileNavOpen}
               aria-controls={mobilePanelId}
               onClick={() => {
@@ -1195,7 +1308,7 @@ function HeaderV1Inner({
           className={`absolute inset-0 bg-black/40 transition-opacity duration-[420ms] ease-out motion-reduce:transition-none ${
             mobileNavOpen ? "opacity-100" : "opacity-0"
           }`}
-          aria-label="Close menu"
+          aria-label="Close navigation"
           tabIndex={mobileNavOpen ? 0 : -1}
           onClick={closeMobileNav}
         />
@@ -1228,13 +1341,13 @@ function HeaderV1Inner({
                 className="text-[1rem] leading-[1.6] font-semibold"
                 style={{ color: isGlassClear ? "#ffffff" : BRAND_NAVY[900] }}
               >
-                Menu
+                Navigation
               </span>
               <button
                 type="button"
                 className={isGlassClear ? HEADER_V1_ICON_BUTTON_CLASSES_OVERLAY : HEADER_V1_ICON_BUTTON_CLASSES}
                 style={isGlassClear ? HEADER_V1_LINK_VARS_OVERLAY : HEADER_V1_LINK_VARS}
-                aria-label="Close menu"
+                aria-label="Close navigation"
                 onClick={closeMobileNav}
               >
                 <XMarkIcon className="h-6 w-6" aria-hidden />
@@ -1257,6 +1370,7 @@ function HeaderV1Inner({
                   <HeaderV1NavLink
                     href={item.href}
                     className="block w-full"
+                    mobileDrawerPrimaryRow
                     onClick={closeMobileNavFromLink}
                     onLight={!isGlassClear}
                   >
@@ -1332,7 +1446,8 @@ export function DesignSystemHeaderFooter() {
         <p className="mt-1 max-w-2xl text-sm leading-6 text-zinc-600">
           4.5rem bar; content max-width 1320px. Nav hovers use brand mint 600. Below{" "}
           <code className="rounded bg-zinc-100 px-1 py-0.5 text-xs">lg</code>, primary
-          CTA moves into the slide-out drawer with Search, Account, and Menu in the bar.
+          CTA moves into the slide-out drawer with Search, Account, and the navigation
+          trigger in the bar.
         </p>
 
         <HeaderV1 className="mt-4" />

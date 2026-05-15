@@ -3,7 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 
 import { PrototypeHeroSeeHowCard } from "@/components/prototype-hero-see-how-card";
-import { PrototypeHeroYoutubePreviewCard } from "@/components/prototype-hero-youtube-preview-card";
+import {
+  PrototypeHeroVideoPreviewCard,
+  PROTOTYPE_HERO_EXACTMATCH_VIDEO,
+  PROTOTYPE_HERO_TRANSFER_PRICING_VIDEO,
+} from "@/components/prototype-hero-video-preview-card";
 
 /** Max drift toward cursor (px); scales direction vector before saturating softly with tanh. */
 const MAX_PULL_PX = 7;
@@ -123,12 +127,12 @@ export function PrototypeHeroMagneticCardsColumn() {
                 transform: `translate3d(${offsets[1].x}px, ${offsets[1].y}px, 0)`,
               }}
             >
-              <PrototypeHeroYoutubePreviewCard
-                previewSrc="/preview1.png"
+              <PrototypeHeroVideoPreviewCard
+                videoSrc={PROTOTYPE_HERO_EXACTMATCH_VIDEO}
                 label="Exactmatch is Here"
                 modalTitle="Exactera's Exactmatch is Here"
-                youtubeEmbedBaseUrl="https://www.youtube.com/embed/VRMaHcj7CL8"
                 size="large"
+                compact
               />
             </div>
           </div>
@@ -143,12 +147,12 @@ export function PrototypeHeroMagneticCardsColumn() {
                 transform: `translate3d(${offsets[2].x}px, ${offsets[2].y}px, 0)`,
               }}
             >
-              <PrototypeHeroYoutubePreviewCard
-                previewSrc="/preview2.png"
+              <PrototypeHeroVideoPreviewCard
+                videoSrc={PROTOTYPE_HERO_TRANSFER_PRICING_VIDEO}
                 label="Transfer Pricing"
                 modalTitle="Transfer Pricing Overview"
-                youtubeEmbedBaseUrl="https://www.youtube.com/embed/eHfE4S9a14w"
                 size="large"
+                compact
               />
             </div>
           </div>

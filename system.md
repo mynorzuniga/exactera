@@ -26,7 +26,7 @@ This file is the **canonical specification** for design tokens, typography, spac
 | Color tokens (hex ramps, RSC-safe) | `lib/design-system-color-tokens.ts` |
 | Spacing scale (presentational up to `5rem`) | `components/design-system-sizing.tsx` |
 | Typography specimens | `components/design-system-typography.tsx` |
-| App shell / design system home + prototype routes | `app/page.tsx`, `app/prototype-1/page.tsx`, `app/prototype-2/page.tsx`, `app/layout.tsx`, `app/globals.css` |
+| App shell / design system home + prototype routes | `app/page.tsx`, `app/prototype-1/page.tsx`, `app/prototype-2/page.tsx`, `app/prototype-3/page.tsx`, `app/layout.tsx`, `app/globals.css` |
 | Global header (V1 desktop + mobile drawer) + promotion bars + client logos specimen | `components/design-system-header-footer.tsx`, `components/prototype-client-logos-strip.tsx` |
 | Brand logo asset | `public/logo.svg` |
 | Fonts (Next/font) | `app/layout.tsx` — `--font-geist-sans`, `--font-geist-mono`, `--font-plus-jakarta` |
@@ -135,6 +135,7 @@ Production may use **`> 5rem`**, but undocumented spacing **must not** be assume
 | Pre-footer smarter-tax CTA strip (`PrototypeSmarterTaxCtaStrip`) | `components/prototype-smarter-tax-cta-strip.tsx` |
 | Client logos strip (marquee) | `components/prototype-client-logos-strip.tsx` |
 | Prototype 1 hero magnetic cards column (`PrototypeHeroMagneticCardsColumn`) | `components/prototype-hero-magnetic-cards-column.tsx` |
+| Prototype 1 hero video preview tiles (ExactMatch / Transfer Pricing; local MP4 preview + modal) | `components/prototype-hero-video-preview-card.tsx` |
 
 Promotion bars use client state: the **X** control hides the bar until the page is reloaded (not persisted).
 

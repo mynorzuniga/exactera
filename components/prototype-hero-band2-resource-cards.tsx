@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { BRAND_MINT, BRAND_NAVY } from "@/lib/design-system-color-tokens";
 
 /**
- * Prototype 2 — hero band 2. Cards alternate navy / mint tints (`color-mix` on tokens, low alpha
+ * Prototype 2 / 3 — hero band 2. Cards alternate navy / mint tints (`color-mix` on tokens, low alpha
  * so video reads through); glass surface (`backdrop-blur-lg`). “Read more” matches **tertiary**
  * small geometry (`design-system-cta-buttons.tsx`: 2rem height, `px-4`, Body Standard, bold,
  * 0.5rem radius) with **white 70%** border + label and **white 10%** fill. Entrance motion matches

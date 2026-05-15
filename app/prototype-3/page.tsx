@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 import { HeaderV1 } from "@/components/design-system-header-footer";
 import { PrototypeHeroBand2ResourceCards } from "@/components/prototype-hero-band2-resource-cards";
 import { PrototypeHeroCtaCluster } from "@/components/prototype-hero-cta-cluster";
+import { PrototypeHeroLoopGlassBridge } from "@/components/prototype-hero-loop-glass-bridge";
 import { BRAND_MINT, BRAND_NAVY, NEUTRAL_GREY } from "@/lib/design-system-color-tokens";
 
 export const metadata: Metadata = {
-  title: "Exactera · Prototype 2",
-  description: "Interactive prototype 2 for Exactera.",
+  title: "Exactera · Prototype 3",
+  description:
+    "Interactive prototype 3 — glass-clear hero like Prototype 2; looping video with a frost bridge across the splice.",
 };
 
 /** `rgba(r, g, b, …)` channels from a design-system hex token. */
@@ -22,7 +24,7 @@ function rgbChannelsFromTokenHex(hex: string): string {
 /** Base white (`system.md` foundations). */
 const BASE_WHITE = "#ffffff";
 
-export default function Prototype2Page() {
+export default function Prototype3Page() {
   const navyRgb = rgbChannelsFromTokenHex(BRAND_NAVY[900]);
   const navyDeepRgb = rgbChannelsFromTokenHex(BRAND_NAVY[950]);
   const mintRgb = rgbChannelsFromTokenHex(BRAND_MINT[500]);
@@ -31,20 +33,11 @@ export default function Prototype2Page() {
       <main className="flex min-h-0 flex-1 flex-col">
         <section
           className="relative flex min-h-[100dvh] flex-col overflow-x-hidden overflow-y-visible"
-          aria-labelledby="prototype-2-hero-heading"
+          aria-labelledby="prototype-3-hero-heading"
         >
-          <video
-            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden
-          >
-            <source src="/video1.mp4" type="video/mp4" />
-          </video>
+          <PrototypeHeroLoopGlassBridge src="/video1.mp4" />
           <div
-            className="pointer-events-none absolute inset-0 z-[1]"
+            className="pointer-events-none absolute inset-0 z-[2]"
             style={{
               background: `linear-gradient(168deg, rgba(${navyRgb}, 0.48) 0%, rgba(0, 0, 0, 0.42) 46%, rgba(${mintRgb}, 0.12) 68%, rgba(${navyDeepRgb}, 0.34) 100%)`,
             }}
@@ -60,7 +53,7 @@ export default function Prototype2Page() {
               <div className="mx-auto w-full max-w-[1320px] px-6 pb-8 pt-16 sm:pb-10 sm:pt-20 lg:pb-12 lg:pt-24">
                 <div className="w-full max-w-full lg:max-w-[60%]">
                   <h1
-                    id="prototype-2-hero-heading"
+                    id="prototype-3-hero-heading"
                     className="prototype-hero-reveal text-[3rem] leading-[1.15] font-semibold tracking-[-0.02em]"
                     style={{ color: BASE_WHITE }}
                   >
