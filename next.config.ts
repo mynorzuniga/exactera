@@ -7,6 +7,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /** Avoid dev HMR/CORS warnings when the browser hits `127.0.0.1` vs `localhost`. */
   allowedDevOrigins: ["127.0.0.1", "localhost"],
+  /** Next.js 16 defaults production `next build` to Turbopack; webpack-only tweaks below require this shim. */
+  turbopack: {},
   webpack: (config, { dev }) => {
     if (dev) {
       config.watchOptions = {
